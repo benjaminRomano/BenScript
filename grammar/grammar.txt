@@ -1,0 +1,195 @@
+//Legend:
+// * = opt
+// E = nothing
+
+program: statement-seq
+       | E
+
+statement-seq: statement statement-seq
+             | E
+             
+statement: expression-statement
+         | if-statement
+         | while-statement
+         | for-statement
+         | jump-statement
+         | compound-statement
+         
+expression-statement: expression ;
+
+compound-statement: { statement-seq* }
+         
+jump-statement: BREAK ;
+              | RETURN ;
+              | CONTINUE ;
+
+if-statement: IF ( expression ) statement
+
+while-statement: WHILE ( expression ) statement
+
+for-statement: FOR ( expression-statement expression* ; expression* ) statement
+             
+keywords: VAR | FUNC | BREAK | RETURN | CONTINUE | IF | TRUE | FALSE | NULL
+          
+funcDefinition: FUNC IDENTIFIER ( param-list* ) statement
+
+param-list: IDENTIFIER , param-list
+          | IDENTIFIER
+
+literal: integer-literal | string-literal | boolean-literal | NULL
+
+number-literal: non-zero-digit digit-seq .* digit-seq*
+              | digit .* digit-seq*
+
+non-zero-digit: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+digit: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+digit-seq: digit digit-seq
+         | digit 
+
+boolean-literal: TRUE | FALSE
+
+string-literal: " double-quote-char-seq* "
+              | ' single-quote-char-seq* '
+
+double-quote-char-seq: any character excluding " and \ 
+                     | escaped-char
+
+single-quote-char-seq: any character excluding ' and \
+                     | escaped-char
+
+escaped-char: \' 
+            | \" 
+            | \\ 
+            | \n 
+            | \t
+
+postfix-expression: prefix-expression
+                  | postfix-expression . IDENTIFIER
+                  | postfix-expression [ expression ]
+                  | postfix-expression ( param-list* )
+                  | primary-expression
+
+binary-expression: 
+binary-expression binary-op binary-expression 
+                 
+binary-op: ==
+         | !=
+         | <
+         | >
+         | >=
+         | <=
+         | &&
+         | ||
+         | +
+         | -
+         | *
+         | /
+         | ^ //right assosciative
+         | %
+         
+unary-expression: postfix-expression 
+                | prefix-expression
+
+prefix-expression: prefix-op expression
+
+prefix-op: !
+         | -
+
+postfix-expression: expression postfix-op
+
+postfix-op: ++
+          | --
+          | ?
+
+assignment-expression: VAR IDENTIFIER assignment-op equality-expression
+
+assignment-op: =
+             | +=
+             | -=
+             | *=
+             | /=
+             | %=
+             | ^=
+             
+equality-expression: equality-expression equality-op relational-expression
+                   | relational-expression
+
+equality-op: ==
+           | !=
+           
+relational-expression: relational-expression relational-op additive-expression
+                     | additive-expression
+                     
+relational-op: <
+             | >
+             | <=
+             | >=
+           
+additive-expression: additive-expression additive-op multiplicative-expression          
+                   | multiplicative-expression
+
+additive-op: +
+           | -
+           
+multiplicative-expression: multiplicative-expression multiplicative-op exponential-expression          
+                   | exponential-expression
+                   
+multiplicative-op: /
+                 | %
+                 | *
+
+//Right assosciative 3^5^7 is 3^(5^7)
+exponential-expression: prefix-expression ^ exponential-expression                 
+                      | prefix-expression
+           
+prefix-expression: prefix-expression prefix-op postfix-expression          
+                 | postfix-expression
+
+prefix-op: !
+         | -
+         
+postfix-expression: postfix-expression postfix-op call-expression
+                  | call-expression
+
+postfix-op: ++
+          | --
+          | ?
+             
+call-expression: call-expression ( argument-list* )
+               | primary-expression
+             
+argument-list: expression , argument-list
+             | expression
+
+primary-expression: IDENTIFIER
+                  | literal
+                  | array-expression
+                  | object-expression
+                  | lambda-expression
+                  | ( expression )
+                  
+array-expression: [ array-expression-items* ]
+
+array-expression-items: expression , array-expression                
+                      | expression
+                
+object-expression: { object-expression-items* }
+
+object-expression-items: IDENTIFIER: expression, object-expression-items
+                       | expression
+
+lambda-expression: ( param-list ) => statement
+
+// Expression operator precedence
+// literal, identifier, array, object, lambda, parenthesis = 0
+// Assignment = 1
+// equality = 2
+// relational = 3
+// sum, subtraction = 4
+// multiplication, divide, modulus = 5
+// exponent (right assosciative) = 6
+// prefix ( !, -) = 7
+// postfix (++, --, ?, accessors) = 8
+// function call = 9

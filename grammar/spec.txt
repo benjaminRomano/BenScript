@@ -1,0 +1,123 @@
+//Variable names
+Can start with [_a-zA-Z]
+Can be followed by [_0-9a-zA-Z]
+
+//Integer
+var a = 5;
+var a = 5.5;
+var a = -5.5;
+
+//Boolean 
+var a = true;
+var b = false;
+
+//String
+var a = "hello world"; //Strings work like they do in java/C#, etc.
+var a = "\"hello world\"";
+var a = "works\n";
+strings can be accessed by index
+var a = "hello world";
+a[0] //h
+
+//Objects
+//TODO: Fix problem with not being able to iterate through keys
+var a = {
+    a: 5,
+    b: "hello world"
+}
+
+//Null
+var a = null;
+
+//Arrays
+var a = [5, "hello world", null];
+a[0] //5;
+a[1] //"hello world"
+a[2] //null
+//Arrays can grow dynamically
+a.prepend(5);
+a.append(5);
+
+//Objects
+var a = {
+    a: 5,
+    b: "hello world"
+}
+a[a] //5
+a[b] //"hello world"
+a.a //5
+a.b //"hello world"
+    
+//Operators
+==, !=, <, <=, >, >=, ?
+&&, ||
++, -, *, /, %, ^ (maybe exponential)
++=, -=, *=, /=, %=, ^=, 
+++, -- (prefix only)
+    
+
+//Statements
+expression, if, while, for, jump-statement (break, return, continue)
+(expression includes assignment)
+
+//if statement
+
+if (a == 5) {
+    console.print(5); //5
+} else if (a == 6) {
+    console.print(6) //6
+} else {
+    console.print("not 5 or 6");
+}
+
+// while loop
+
+while (a?) {
+    a = null; 
+}
+
+while (a?) {
+    continue; //Obviously this is an infinite loop
+}
+
+while (a?) {
+    break; //Leave loop early
+}
+
+//for loop
+//Break, continue work the same as in while loops
+for (var i = 0; i < arr.length; i++) {
+    console.print(i, ": ", arr[i]);
+}
+
+//Functions
+function f(f, ...g) {
+    console.print(f, g);
+}
+
+f(a); //5
+f(a,b); //5 ["hello"]
+
+//Anonymous functions
+
+//Can instantly call functions
+((d, e) => { console.print(d, e); })(a,b); //5 hello
+
+
+var a = (d,...e) => {
+    console.print(d, e); //Variadics work the same as in functions
+}
+
+//Comments
+A comment can be a block comment (/* */)  or line comment (//) 
+
+//Dictionary - Library implementation
+var dic = Dictionary.create();
+dic.add("a", "b");
+dic.put("5", "a");
+dic.get("6"); //Error: Invalid Key not found
+dic.getIfExists("5"); //null
+
+
+//WISHLIST:
+// : operator for iterating over things with iterables

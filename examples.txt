@@ -1,0 +1,30 @@
+//Example 1
+var _a = 1;
+var a5 = 5;
+var c = _a + a5;
+console.println(c); //6
+
+
+//Example 2
+var a = {
+    a: 5,
+    b: "hello",
+    d: "world"
+};
+console.println(a); // { a: 5, b: "hello", c: "world" }
+console.println(a.b); // hello
+console.println(a[a]); //5
+console.println(a[e]?); //false
+console.println(a[d]?); // world
+
+//Example 3
+var e = (d) => { console.println('hello'); };
+var array = ['5', 10, e];
+for (var i = 0; i < array.length; i++) {
+    console.println(array[i]);
+}
+//5, 10, Function
+
+
+
+//Langauge is currently a subset of javascript except for the ? operator
