@@ -14,6 +14,9 @@ statement: expression-statement
          | for-statement
          | jump-statement
          | compound-statement
+         | variable-declaration-statement
+         
+variable-declaration-statement: VAR asignment-expression ; 
          
 expression-statement: expression ;
 
@@ -24,12 +27,13 @@ jump-statement: BREAK ;
               | CONTINUE ;
 
 if-statement: IF ( expression ) statement
+            | IF ( expression ) statement ELSE statement
 
 while-statement: WHILE ( expression ) statement
 
-for-statement: FOR ( expression-statement expression* ; expression* ) statement
+for-statement: FOR ( variable-declaration-statement expression* ; expression* ) statement
              
-keywords: VAR | FUNC | BREAK | RETURN | CONTINUE | IF | TRUE | FALSE | NULL
+keywords: VAR | FUNC | BREAK | RETURN | CONTINUE | IF | TRUE | FALSE | NULL | ELSE
           
 funcDefinition: FUNC IDENTIFIER ( param-list* ) statement
 
@@ -38,8 +42,8 @@ param-list: IDENTIFIER , param-list
 
 literal: integer-literal | string-literal | boolean-literal | NULL
 
-number-literal: non-zero-digit digit-seq .* digit-seq*
-              | digit .* digit-seq*
+integer-literal: non-zero-digit digit-seq*
+              | 0
 
 non-zero-digit: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
@@ -65,45 +69,7 @@ escaped-char: \'
             | \n 
             | \t
 
-postfix-expression: prefix-expression
-                  | postfix-expression . IDENTIFIER
-                  | postfix-expression [ expression ]
-                  | postfix-expression ( param-list* )
-                  | primary-expression
-
-binary-expression: 
-binary-expression binary-op binary-expression 
-                 
-binary-op: ==
-         | !=
-         | <
-         | >
-         | >=
-         | <=
-         | &&
-         | ||
-         | +
-         | -
-         | *
-         | /
-         | ^ //right assosciative
-         | %
-         
-unary-expression: postfix-expression 
-                | prefix-expression
-
-prefix-expression: prefix-op expression
-
-prefix-op: !
-         | -
-
-postfix-expression: expression postfix-op
-
-postfix-op: ++
-          | --
-          | ?
-
-assignment-expression: VAR IDENTIFIER assignment-op equality-expression
+assignment-expression: IDENTIFIER assignment-op equality-expression
 
 assignment-op: =
              | +=
@@ -150,13 +116,15 @@ prefix-expression: prefix-expression prefix-op postfix-expression
 prefix-op: !
          | -
          
-postfix-expression: postfix-expression postfix-op call-expression
+postfix-expression: postfix-expression . IDENTIFIER
+                  | postfix-expression [ expression ]
+                  | postfix-expression postfix-op
                   | call-expression
-
+         
 postfix-op: ++
           | --
           | ?
-             
+          
 call-expression: call-expression ( argument-list* )
                | primary-expression
              
@@ -191,5 +159,5 @@ lambda-expression: ( param-list ) => statement
 // multiplication, divide, modulus = 5
 // exponent (right assosciative) = 6
 // prefix ( !, -) = 7
-// postfix (++, --, ?, accessors) = 8
+// postfix (++, --, accessors, ?) = 8
 // function call = 9
