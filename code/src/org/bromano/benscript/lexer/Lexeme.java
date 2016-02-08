@@ -3,6 +3,8 @@ package org.bromano.benscript.lexer;
 public class Lexeme {
     public LexemeKind kind;
     public String value;
+    public LinePosition linePos;
+
 
     public Lexeme(LexemeKind kind) {
         this.kind = kind;
@@ -13,8 +15,23 @@ public class Lexeme {
         this.value = value;
     }
 
+    public Lexeme(LexemeKind kind, LinePosition linePos) {
+        this.kind = kind;
+
+        this.linePos = linePos;
+    }
+
+    public Lexeme(LexemeKind kind, String value, LinePosition linePos) {
+        this.kind = kind;
+        this.value = value;
+        this.linePos = linePos;
+    }
+
     @Override
     public String toString() {
+        if (linePos != null) {
+            return this.linePos.toString() + " " + this.kind.name() + " " + this.value;
+        }
         return this.kind.name() + " " + this.value;
     }
 
