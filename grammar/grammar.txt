@@ -33,14 +33,14 @@ while-statement: WHILE ( expression ) statement
 
 for-statement: FOR ( variable-declaration-statement expression* ; expression* ) statement
              
-keywords: VAR | FUNC | BREAK | RETURN | CONTINUE | IF | TRUE | FALSE | NULL | ELSE
+keywords: VAR | FUNC | BREAK | RETURN | CONTINUE | IF | TRUE | FALSE | NULL | ELSE | FOR | WHILE
           
 funcDefinition: FUNC IDENTIFIER ( param-list* ) statement
 
 param-list: IDENTIFIER , param-list
           | IDENTIFIER
 
-literal: integer-literal | string-literal | boolean-literal | NULL
+literal: integer-literal | string-literal | boolean-literal | NULL 
 
 integer-literal: non-zero-digit digit-seq*
               | 0
