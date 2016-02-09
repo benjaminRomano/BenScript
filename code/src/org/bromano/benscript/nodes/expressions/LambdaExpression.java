@@ -5,8 +5,8 @@ import org.bromano.benscript.nodes.statements.Statement;
 
 import java.util.List;
 
-public class LambdaExpression {
+public class LambdaExpression implements Expression {
     public List<Lexeme> parameters;
-    public List<Statement> statements;
+    public Statement statement;
 
 }

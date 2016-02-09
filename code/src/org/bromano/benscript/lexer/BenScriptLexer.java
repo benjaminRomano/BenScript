@@ -202,6 +202,10 @@ public class BenScriptLexer implements Lexer {
                     }
 
                     return new Lexeme(LexemeKind.Slash, linePos);
+                case ':':
+                    linePos = getLinePosition();
+                    this.pos++;
+                    return new Lexeme(LexemeKind.Colon, linePos);
                 case ';':
                     linePos = getLinePosition();
                     this.pos++;
@@ -223,6 +227,9 @@ public class BenScriptLexer implements Lexer {
                     if (isAMatch(this.pos, "=")) {
                         this.pos++;
                         return new Lexeme(LexemeKind.EqualsEquals, linePos);
+                    } else if(this.isAMatch(this.pos, ">")) {
+                        this.pos++;
+                        return new Lexeme(LexemeKind.EqualsGreaterThan, linePos);
                     }
 
                     return new Lexeme(LexemeKind.Equals, linePos);

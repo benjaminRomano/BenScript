@@ -18,6 +18,8 @@ public enum LexemeKind {
     ForKeyword,
     WhileKeyword,
     //Punctuation
+    Colon,
+    EqualsGreaterThan,
     OpenBrace,
     CloseBrace,
     OpenBracket,

@@ -18,6 +18,6 @@ public class NameParslet implements PrefixParslet {
 
         nameExpression.name = lexeme;
 
-        return new NameExpression();
+        return nameExpression;
     }
 }

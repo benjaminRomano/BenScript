@@ -42,6 +42,63 @@ public class BenScriptParser implements Parser {
         this.end = lexemes.size();
     }
 
+    public Lexeme lookAhead(int x) {
+        if (this.pos + x >= this.end) {
+            return null;
+        }
+
+        return this.lexemes.get(this.pos + x);
+    }
+
+    public boolean isAMatch(LexemeKind kind) {
+        return this.pos < this.end && this.lexemes.get(this.pos).kind == kind;
+
+    }
+
+    public boolean isAMatch(LexemeKind[] kinds) {
+        if (this.pos >= this.end) {
+            return false;
+        }
+
+        Lexeme l = this.lexemes.get(this.pos);
+
+        for (LexemeKind kind : kinds) {
+            if (l.kind == kind) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAMatch(Lexeme lexeme, LexemeKind kind) {
+        return this.pos < this.end && lexeme.kind == kind;
+    }
+
+    public Lexeme match() throws ParserException {
+        if (this.pos >= this.end) {
+            throw new ParserException("Expected another lexeme");
+        }
+
+        Lexeme lexeme = this.lexemes.get(this.pos);
+
+        this.pos++;
+
+        return lexeme;
+    }
+
+    public Lexeme match(LexemeKind kind) throws ParserException {
+        if (this.pos >= this.end || this.lexemes.get(this.pos).kind != kind) {
+            throw new ParserException("Expected " + kind.name());
+        }
+
+        Lexeme lexeme = this.lexemes.get(this.pos);
+
+        this.pos++;
+
+        return lexeme;
+    }
+
+
     @Override
     public Program parse() throws ParserException {
         Program program = new Program();
@@ -57,20 +114,34 @@ public class BenScriptParser implements Parser {
     }
 
     private Expression parseExpression() throws ParserException {
-        // TODO: Implement this!!!!!!!!!!!!
 
+        return this.parseExpression(0);
+    }
+
+    public Expression parseExpression(int precedence) throws ParserException {
         Lexeme lexeme = this.match();
 
-        throw new NotImplementedException();
+        PrefixParslet prefix = this.prefixParslets.getOrDefault(lexeme.kind, null);
+
+        if (prefix == null) {
+            throw new ParserException("Unexpected token: " + lexeme);
+        }
+
+        Expression left = prefix.parse(this, lexeme);
+
+        while (precedence < this.getPrecedence()) {
+
+            lexeme = this.match();
+
+            InfixParslet infix = this.infixParslets.get(lexeme.kind);
+
+            left = infix.parse(this, left, lexeme);
+        }
+
+        return left;
     }
 
-    public Expression parseExpression(int precedence) {
-
-        // TODO: Implement this!!!!!!!!!!!!
-        throw new NotImplementedException();
-    }
-
-    private Statement parseStatement() throws ParserException {
+    public Statement parseStatement() throws ParserException {
 
         if (this.expressionStatementPending()) {
 
@@ -110,6 +181,17 @@ public class BenScriptParser implements Parser {
         }
 
         throw new ParserException("Expected a statement");
+    }
+
+    private int getPrecedence() {
+
+        if (this.pos >= this.end) {
+            return 0;
+        }
+
+        InfixParslet infix = this.infixParslets.getOrDefault(this.lookAhead(0).kind, null);
+
+        return infix == null ? 0 :  infix.getPrecedence();
     }
 
     private ExpressionStatement parseExpressionStatement() throws ParserException {
@@ -338,57 +420,6 @@ public class BenScriptParser implements Parser {
         });
     }
 
-    private Lexeme lookAhead(int x) {
-        if (this.pos + x >= this.end) {
-            return null;
-        }
-
-        return this.lexemes.get(this.pos + x);
-    }
-
-    private boolean isAMatch(LexemeKind kind) {
-        return this.lexemes.get(this.pos).kind == kind;
-    }
-
-    private boolean isAMatch(LexemeKind[] kinds) {
-        Lexeme l = this.lexemes.get(this.pos);
-
-        for (LexemeKind kind : kinds) {
-            if (l.kind == kind) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isAMatch(Lexeme lexeme, LexemeKind kind) {
-        return lexeme.kind == kind;
-    }
-
-    private Lexeme match() throws ParserException {
-        if (this.pos >= this.end) {
-            throw new ParserException("Expected another lexeme");
-        }
-
-        Lexeme lexeme = this.lexemes.get(this.pos);
-
-        this.pos++;
-
-        return lexeme;
-    }
-
-    private Lexeme match(LexemeKind kind) throws ParserException {
-        if (this.pos >= this.end || this.lexemes.get(this.pos).kind == kind) {
-            throw new ParserException("Expected " + kind.name());
-        }
-
-        Lexeme lexeme = this.lexemes.get(this.pos);
-
-        this.pos++;
-
-        return lexeme;
-    }
-
     private Map<LexemeKind, PrefixParslet> generatePrefixParsletMap() {
         Map<LexemeKind, PrefixParslet> map = new HashMap<>();
 
@@ -396,8 +427,14 @@ public class BenScriptParser implements Parser {
         map.put(LexemeKind.Minus, new PrefixOperatorParslet(Precedence.PREFIX));
 
         map.put(LexemeKind.Identifier, new NameParslet());
+        map.put(LexemeKind.IntegerLiteral, new IntegerLiteralParslet());
+        map.put(LexemeKind.BooleanLiteral, new BooleanLiteralParslet());
+        map.put(LexemeKind.StringLiteral, new StringLiteralParslet());
 
-        // TODO: lambda, group, arrays and objects
+        map.put(LexemeKind.OpenBracket, new ArrayParslet());
+        map.put(LexemeKind.OpenBrace, new ObjectParslet());
+
+        map.put(LexemeKind.OpenParen, new LambdaOrGroupParslet());
 
         return map;
     }
@@ -433,7 +470,9 @@ public class BenScriptParser implements Parser {
         map.put(LexemeKind.MinusMinus, new PostfixOperatorParslet(Precedence.POSTFIX));
         map.put(LexemeKind.QuestionMark, new PostfixOperatorParslet(Precedence.POSTFIX));
 
-        // TODO: Array/Object accessor, funcCall
+        map.put(LexemeKind.OpenBracket, new AccessorParslet());
+
+        map.put(LexemeKind.OpenParen, new CallParslet());
 
         return map;
     }

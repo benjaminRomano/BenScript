@@ -48,7 +48,7 @@ public class BenScriptLexerTest {
 
 
         //Puncuation
-        this.testLexStream("{ } [ ] ( ) < <= > >= == != ! ; ? && || + - * / % ^ = += -= *= /= %= ^= ++ -- , .",
+        this.testLexStream("{ } [ ] ( ) < <= > >= == != ! ; ? && || + - * / % ^ = += -= *= /= %= ^= ++ -- , . : =>",
                 new Lexeme[] {
                         new Lexeme(LexemeKind.OpenBrace),
                         new Lexeme(LexemeKind.CloseBrace),
@@ -83,7 +83,9 @@ public class BenScriptLexerTest {
                         new Lexeme(LexemeKind.PlusPlus),
                         new Lexeme(LexemeKind.MinusMinus),
                         new Lexeme(LexemeKind.Comma),
-                        new Lexeme(LexemeKind.Dot)
+                        new Lexeme(LexemeKind.Dot),
+                        new Lexeme(LexemeKind.Colon),
+                        new Lexeme(LexemeKind.EqualsGreaterThan),
                 });
 
         this.testLexStream("_a abcd a0b", new Lexeme[] {
