@@ -12,19 +12,18 @@ statement: expression-statement
          | if-statement
          | while-statement
          | for-statement
-         | jump-statement
          | compound-statement
          | variable-declaration-statement
+         | funcDefinition
+         | BREAK ;
+         | return-statement
+         | CONTINUE;
          
-variable-declaration-statement: VAR asignment-expression ; 
+variable-declaration-statement: VAR = expression ; 
          
 expression-statement: expression ;
 
 compound-statement: { statement-seq* }
-         
-jump-statement: BREAK ;
-              | RETURN ;
-              | CONTINUE ;
 
 if-statement: IF ( expression ) statement
             | IF ( expression ) statement ELSE statement
@@ -69,7 +68,10 @@ escaped-char: \'
             | \n 
             | \t
 
-assignment-expression: IDENTIFIER assignment-op equality-expression
+expression: assignment-expression           
+
+assignment-expression: assignment-expression assignment-op equality-expression
+                     | equality-expression
 
 assignment-op: =
              | +=
@@ -131,6 +133,7 @@ call-expression: call-expression ( argument-list* )
 argument-list: expression , argument-list
              | expression
 
+//Should this be reduced to literal/identifier?
 primary-expression: IDENTIFIER
                   | literal
                   | array-expression
