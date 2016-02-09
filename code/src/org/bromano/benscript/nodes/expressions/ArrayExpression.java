@@ -1,4 +1,4 @@
-package org.bromano.benscript.nodes.Expression;
+package org.bromano.benscript.nodes.expressions;
 
 import java.util.List;
 

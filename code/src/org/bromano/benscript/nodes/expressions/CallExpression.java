@@ -1,6 +1,4 @@
-package org.bromano.benscript.nodes.Expression;
-
-import org.bromano.benscript.lexer.Lexeme;
+package org.bromano.benscript.nodes.expressions;
 
 import java.util.List;
 

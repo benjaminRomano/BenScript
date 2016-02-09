@@ -11,7 +11,7 @@ statement-seq: statement statement-seq
 statement: expression-statement
          | if-statement
          | while-statement
-         | for-statement
+         | for-statementG
          | compound-statement
          | variable-declaration-statement
          | funcDefinition

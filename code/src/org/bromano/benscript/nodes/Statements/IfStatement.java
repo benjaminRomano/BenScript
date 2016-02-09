@@ -1,8 +1,6 @@
-package org.bromano.benscript.nodes.Statements;
+package org.bromano.benscript.nodes.statements;
 
-import org.bromano.benscript.nodes.Expression.Expression;
-
-import java.util.List;
+import org.bromano.benscript.nodes.expressions.Expression;
 
 public class IfStatement implements Statement {
     public Expression conditional;

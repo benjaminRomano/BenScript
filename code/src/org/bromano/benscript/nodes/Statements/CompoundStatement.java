@@ -1,4 +1,4 @@
-package org.bromano.benscript.nodes.Statements;
+package org.bromano.benscript.nodes.statements;
 
 import java.util.List;
 
