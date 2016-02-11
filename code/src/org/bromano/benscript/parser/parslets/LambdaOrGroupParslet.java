@@ -4,6 +4,7 @@ import org.bromano.benscript.lexer.Lexeme;
 import org.bromano.benscript.lexer.LexemeKind;
 import org.bromano.benscript.nodes.expressions.ArrayExpression;
 import org.bromano.benscript.nodes.expressions.Expression;
+import org.bromano.benscript.nodes.expressions.GroupExpression;
 import org.bromano.benscript.nodes.expressions.LambdaExpression;
 import org.bromano.benscript.parser.Parser;
 import org.bromano.benscript.parser.ParserException;
@@ -32,11 +33,13 @@ public class LambdaOrGroupParslet implements PrefixParslet {
         lookahead = parser.lookAhead(x + 1);
         if (lookahead == null || lookahead.kind != LexemeKind.EqualsGreaterThan) {
 
-            Expression expression = parser.parseExpression(0);
+            GroupExpression groupExpression = new GroupExpression();
+
+            groupExpression.expression = parser.parseExpression(0);
 
             parser.match(LexemeKind.CloseParen);
 
-            return expression;
+            return groupExpression;
         }
 
         //Case of lambda

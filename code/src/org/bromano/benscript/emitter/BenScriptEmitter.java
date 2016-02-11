@@ -306,6 +306,16 @@ public class BenScriptEmitter implements Emitter {
 
     }
 
+    private void emitGroupExpression(GroupExpression expression) throws EmitterException {
+
+        this.prettyPrinter.append("(");
+
+        this.emitExpression(expression.expression);
+
+        this.prettyPrinter.append(")");
+
+    }
+
     private void emitExpression(Expression expression) throws EmitterException {
 
         if (expression instanceof PropertyAccessorExpression) {
@@ -358,6 +368,11 @@ public class BenScriptEmitter implements Emitter {
         } else if (expression instanceof UnaryExpression) {
 
             this.emitUnaryExpression((UnaryExpression) expression);
+
+        } else if (expression instanceof GroupExpression) {
+
+            this.emitGroupExpression((GroupExpression) expression);
+
         } else {
             throw new EmitterException("Could not emit expression" + expression);
         }
