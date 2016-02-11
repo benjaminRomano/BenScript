@@ -27,6 +27,7 @@ public class ObjectParslet implements PrefixParslet {
 
         while (parser.isAMatch(LexemeKind.Comma)) {
             parser.match(LexemeKind.Comma);
+            lexeme = parser.match(LexemeKind.Identifier);
             parser.match(LexemeKind.Colon);
             objectExpression.keyValues.put(lexeme, parser.parseExpression(0));
         }

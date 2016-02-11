@@ -1,14 +1,12 @@
 package org.bromano.benscript.emitter;
 
-import com.sun.javafx.scene.control.skin.IntegerFieldSkin;
 import org.bromano.benscript.lexer.Lexeme;
 import org.bromano.benscript.nodes.Program;
 import org.bromano.benscript.nodes.expressions.*;
 import org.bromano.benscript.nodes.statements.*;
-import org.bromano.benscript.parser.parslets.BooleanLiteralParslet;
 
-import java.lang.reflect.AccessibleObject;
 import java.util.List;
+import java.util.Map;
 
 public class BenScriptEmitter implements Emitter {
 
@@ -44,7 +42,7 @@ public class BenScriptEmitter implements Emitter {
 
     private void emitCompoundStatement(CompoundStatement statement) throws EmitterException {
 
-        this.prettyPrinter.append("{");
+        this.prettyPrinter.append("{\n");
         this.prettyPrinter.increaseIndent();
 
         for (Statement s : statement.statements) {
@@ -53,7 +51,6 @@ public class BenScriptEmitter implements Emitter {
 
         this.prettyPrinter.decreaseIndent();
         this.prettyPrinter.append("}");
-
     }
 
     private void emitWhileStatement(WhileStatement statement) throws EmitterException {
@@ -91,7 +88,7 @@ public class BenScriptEmitter implements Emitter {
     private void emitExpressionStatement(ExpressionStatement statement) throws EmitterException {
 
         this.emitExpression(statement.expression);
-        this.prettyPrinter.append(";");
+        this.prettyPrinter.append(";\n");
     }
 
     private void emitFunctionDeclarationStatement(FunctionDeclarationStatement statement) throws EmitterException {
@@ -166,8 +163,6 @@ public class BenScriptEmitter implements Emitter {
         } else {
             throw new EmitterException("Cannot emit statement!" + statement);
         }
-
-        this.prettyPrinter.append("\n");
     }
 
     private void emitAccessorExpression(AccessorExpression expression) throws EmitterException {
@@ -277,24 +272,47 @@ public class BenScriptEmitter implements Emitter {
         this.prettyPrinter.append(expression.name.value);
     }
 
-    private void emitObjectExpression(ObjectExpression expression) {
+    private void emitObjectExpression(ObjectExpression expression) throws EmitterException {
 
         this.prettyPrinter.append("{ \n");
         this.prettyPrinter.increaseIndent();
 
-        for (int i = 0 ; i < expression.keyValues.size(); i++) {
+        int i = 0;
 
+        for (Map.Entry<Lexeme, Expression> keyValue : expression.keyValues.entrySet()) {
+            i++;
 
+            this.prettyPrinter.append(keyValue.getKey().value);
+            this.prettyPrinter.append(" : ");
+            this.emitExpression(keyValue.getValue());
+
+            if (i == expression.keyValues.size() - 1) {
+                this.prettyPrinter.append(",");
+            }
+
+            this.prettyPrinter.append(("\n"));
         }
 
         this.prettyPrinter.decreaseIndent();
-        this.prettyPrinter.append("} \n");
+        this.prettyPrinter.append("}");
+
+    }
+
+    private void emitPropertyAccessorExpression(PropertyAccessorExpression expression) throws EmitterException {
+
+        this.emitExpression(expression.expression);
+        this.prettyPrinter.append(".");
+        this.prettyPrinter.append(expression.property.value);
 
     }
 
     private void emitExpression(Expression expression) throws EmitterException {
 
-        if (expression instanceof AccessorExpression) {
+        if (expression instanceof PropertyAccessorExpression) {
+
+            this.emitPropertyAccessorExpression((PropertyAccessorExpression) expression);
+
+        } else if (expression instanceof AccessorExpression) {
 
             this.emitAccessorExpression((AccessorExpression) expression);
 

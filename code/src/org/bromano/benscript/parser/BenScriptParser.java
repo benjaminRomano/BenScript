@@ -86,11 +86,15 @@ public class BenScriptParser implements Parser {
     }
 
     public Lexeme match(LexemeKind kind) throws ParserException {
-        if (this.pos >= this.end || this.lexemes.get(this.pos).kind != kind) {
-            throw new ParserException("Expected " + kind.name());
+
+        if (this.pos >= this.end) {
+            throw new ParserException("Expected a " + kind.name() + ", but received a EOF");
         }
 
         Lexeme lexeme = this.lexemes.get(this.pos);
+        if (this.lexemes.get(this.pos).kind != kind) {
+            throw new ParserException("Expected a " + kind.name() + ", but received a " + lexeme.kind.name() );
+        }
 
         this.pos++;
 
@@ -142,9 +146,13 @@ public class BenScriptParser implements Parser {
 
     public Statement parseStatement() throws ParserException {
 
-        if (this.expressionStatementPending()) {
+        if (this.expressionPending()) {
 
             return this.parseExpressionStatement();
+
+        } else if (this.compoundStatementPending()) {
+
+            return this.parseCompoundStatement();
 
         } else if (this.ifStatementPending()) {
 
@@ -179,7 +187,7 @@ public class BenScriptParser implements Parser {
             return this.parseFunctionDeclarationStatement();
         }
 
-        throw new ParserException("Expected a statement");
+        throw new ParserException("Expected a statement.");
     }
 
     private int getPrecedence() {
@@ -191,6 +199,23 @@ public class BenScriptParser implements Parser {
         InfixParslet infix = this.infixParslets.getOrDefault(this.lookAhead(0).kind, null);
 
         return infix == null ? 0 :  infix.getPrecedence();
+    }
+
+    private CompoundStatement parseCompoundStatement() throws ParserException {
+
+        CompoundStatement compoundStatement = new CompoundStatement();
+
+        this.match(LexemeKind.OpenBrace);
+
+        compoundStatement.statements = new ArrayList<>();
+
+        while (this.statementPending()) {
+            compoundStatement.statements.add(this.parseStatement());
+        }
+
+        this.match(LexemeKind.CloseBrace);
+
+        return compoundStatement;
     }
 
     private ExpressionStatement parseExpressionStatement() throws ParserException {
@@ -357,7 +382,8 @@ public class BenScriptParser implements Parser {
     }
 
     private boolean statementPending() {
-        return expressionStatementPending()
+        return compoundStatementPending()
+                || expressionStatementPending()
                 || ifStatementPending()
                 || whileStatementPending()
                 || forStatementPending()
@@ -365,6 +391,11 @@ public class BenScriptParser implements Parser {
                 || breakStatementPending()
                 || continueStatementPending()
                 || variableDeclarationPending();
+    }
+
+    private boolean compoundStatementPending() {
+        Lexeme lookahead1 = this.lookAhead(1);
+        return this.isAMatch(LexemeKind.OpenBrace) && !this.isAMatch(lookahead1, LexemeKind.CloseBrace);
     }
 
     private boolean expressionStatementPending() {
@@ -405,7 +436,6 @@ public class BenScriptParser implements Parser {
 
     private boolean expressionPending() {
         return this.isAMatch(new LexemeKind[]{
-                LexemeKind.OpenBrace,
                 LexemeKind.OpenParen,
                 LexemeKind.OpenBracket,
                 LexemeKind.Identifier,
@@ -414,7 +444,19 @@ public class BenScriptParser implements Parser {
                 LexemeKind.StringLiteral,
                 LexemeKind.Exclamation,
                 LexemeKind.Minus
-        });
+        }) || this.objectExpressionPending();
+    }
+
+    // You can tell if an object expression is pending whether it has identifier : or if it is empty
+    // This is due to the fact that compound statements can't be empty
+    private boolean objectExpressionPending() {
+        Lexeme lookahead1 = this.lookAhead(1);
+        Lexeme lookahead2 = this.lookAhead(2);
+
+        return this.isAMatch(LexemeKind.OpenBrace)
+                && ((this.isAMatch(lookahead1, LexemeKind.Identifier)
+                    && this.isAMatch(lookahead2, LexemeKind.Colon))
+                || this.isAMatch(lookahead1, LexemeKind.CloseBrace));
     }
 
     private Map<LexemeKind, PrefixParslet> generatePrefixParsletMap() {
@@ -467,8 +509,8 @@ public class BenScriptParser implements Parser {
         map.put(LexemeKind.MinusMinus, new PostfixOperatorParslet(Precedence.POSTFIX));
         map.put(LexemeKind.QuestionMark, new PostfixOperatorParslet(Precedence.POSTFIX));
 
+        map.put(LexemeKind.Dot, new PropertyAccessorParslet());
         map.put(LexemeKind.OpenBracket, new AccessorParslet());
-
         map.put(LexemeKind.OpenParen, new CallParslet());
 
         return map;

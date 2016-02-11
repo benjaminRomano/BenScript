@@ -18,7 +18,11 @@ public class Main {
 
     public static void main(String[] args) throws LexerException, ParserException, EmitterException {
 
-        Lexer s = new BenScriptLexer("var a = 1 * 2 + a['hello'](arg1,arg2);\n var b = \"hel'lo\";");
+        Lexer s = new BenScriptLexer("" +
+                "var a = 1 * 2 + a['hello'](arg1,arg2);\n" +
+                "var a = { a: 5 + 5, b: 6 - 1 };\n" +
+                "var b = \"hel'lo\";\n" +
+                "(a,b) => { console.println('this should work'); };");
 
         List<Lexeme> lexemeStream = s.getLexStream();
 
@@ -27,7 +31,6 @@ public class Main {
         Parser p = new BenScriptParser(lexemeStream);
 
         Program program = p.parse();
-
 
         Emitter emitter = new BenScriptEmitter();
 

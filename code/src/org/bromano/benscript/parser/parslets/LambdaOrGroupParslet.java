@@ -55,6 +55,9 @@ public class LambdaOrGroupParslet implements PrefixParslet {
             lambdaExpression.parameters.add(parser.match(LexemeKind.Identifier));
         }
 
+        parser.match(LexemeKind.CloseParen);
+        parser.match(LexemeKind.EqualsGreaterThan);
+
         lambdaExpression.statement = parser.parseStatement();
 
         return lambdaExpression;
