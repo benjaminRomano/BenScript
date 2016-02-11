@@ -14,12 +14,12 @@ statement: expression-statement
          | for-statementG
          | compound-statement
          | variable-declaration-statement
-         | funcDefinition
+         | function-declaration-statement
          | BREAK ;
          | return-statement
          | CONTINUE;
          
-variable-declaration-statement: VAR = expression ; 
+variable-declaration-statement: VAR = expression-statement
          
 expression-statement: expression ;
 
@@ -34,7 +34,7 @@ for-statement: FOR ( variable-declaration-statement expression* ; expression* ) 
              
 keywords: VAR | FUNC | BREAK | RETURN | CONTINUE | IF | TRUE | FALSE | NULL | ELSE | FOR | WHILE
           
-funcDefinition: FUNC IDENTIFIER ( param-list* ) statement
+function-declaration-statement: FUNC IDENTIFIER ( param-list* ) statement
 
 param-list: IDENTIFIER , param-list
           | IDENTIFIER

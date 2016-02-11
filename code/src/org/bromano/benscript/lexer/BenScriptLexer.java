@@ -84,10 +84,10 @@ public class BenScriptLexer implements Lexer {
                     this.pos++;
                     if(isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.ExclamationEquals, linePos);
+                        return new Lexeme(LexemeKind.ExclamationEquals, "!=", linePos);
                     }
 
-                    return new Lexeme(LexemeKind.Exclamation, linePos);
+                    return new Lexeme(LexemeKind.Exclamation, "!", linePos);
                 case '"':
                 case '\'':
                     linePos = getLinePosition();
@@ -100,10 +100,10 @@ public class BenScriptLexer implements Lexer {
 
                     if(isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.PercentEquals, linePos);
+                        return new Lexeme(LexemeKind.PercentEquals, "%=", linePos);
                     }
 
-                    return new Lexeme(LexemeKind.Percent, linePos);
+                    return new Lexeme(LexemeKind.Percent, "%", linePos);
                 case '&':
                     linePos = getLinePosition();
                     this.pos++;
@@ -113,7 +113,7 @@ public class BenScriptLexer implements Lexer {
                     }
 
                     this.pos++;
-                    return new Lexeme(LexemeKind.AmpersandAmpersand, linePos);
+                    return new Lexeme(LexemeKind.AmpersandAmpersand, "&&", linePos);
                 case '(':
                     linePos = getLinePosition();
                     this.pos++;
@@ -128,51 +128,51 @@ public class BenScriptLexer implements Lexer {
 
                     if(isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.AsteriskEquals, linePos);
+                        return new Lexeme(LexemeKind.AsteriskEquals, "*=", linePos);
                     }
 
-                    return new Lexeme(LexemeKind.Asterisk, linePos);
+                    return new Lexeme(LexemeKind.Asterisk, "*", linePos);
                 case '+':
                     linePos = getLinePosition();
                     this.pos++;
 
                     if(isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.PlusEquals, linePos);
+                        return new Lexeme(LexemeKind.PlusEquals, "+=", linePos);
                     } else if(isAMatch(this.pos, "+")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.PlusPlus, linePos);
+                        return new Lexeme(LexemeKind.PlusPlus, "++", linePos);
                     }
 
-                    return new Lexeme(LexemeKind.Plus, linePos);
+                    return new Lexeme(LexemeKind.Plus, "+", linePos);
                 case ',':
                     linePos = getLinePosition();
                     this.pos++;
-                    return new Lexeme(LexemeKind.Comma, linePos);
+                    return new Lexeme(LexemeKind.Comma, ",", linePos);
                 case '-':
                     linePos = getLinePosition();
                     this.pos++;
 
                     if(isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.MinusEquals, linePos);
+                        return new Lexeme(LexemeKind.MinusEquals, "-=", linePos);
                     } else if(isAMatch(this.pos, "-")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.MinusMinus, linePos);
+                        return new Lexeme(LexemeKind.MinusMinus, "--", linePos);
                     }
 
-                    return new Lexeme(LexemeKind.Minus, linePos);
+                    return new Lexeme(LexemeKind.Minus, "-", linePos);
                 case '.':
                     linePos = getLinePosition();
                     this.pos++;
-                    return new Lexeme(LexemeKind.Dot, linePos);
+                    return new Lexeme(LexemeKind.Dot, ".", linePos);
                 case '/':
                     linePos = getLinePosition();
                     this.pos++;
 
                     if(isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.SlashEquals, linePos);
+                        return new Lexeme(LexemeKind.SlashEquals, "/=", linePos);
                     } else if (isAMatch(this.pos, "/")) {
                         //Line comments
                         this.pos++;
@@ -201,52 +201,52 @@ public class BenScriptLexer implements Lexer {
                         continue;
                     }
 
-                    return new Lexeme(LexemeKind.Slash, linePos);
+                    return new Lexeme(LexemeKind.Slash, "/", linePos);
                 case ':':
                     linePos = getLinePosition();
                     this.pos++;
-                    return new Lexeme(LexemeKind.Colon, linePos);
+                    return new Lexeme(LexemeKind.Colon, ":", linePos);
                 case ';':
                     linePos = getLinePosition();
                     this.pos++;
-                    return new Lexeme(LexemeKind.Semicolon, linePos);
+                    return new Lexeme(LexemeKind.Semicolon, ";", linePos);
                 case '<':
                     linePos = getLinePosition();
                     this.pos++;
 
                     if (isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.LessThanEquals, linePos);
+                        return new Lexeme(LexemeKind.LessThanEquals, "<=", linePos);
                     }
 
-                    return new Lexeme(LexemeKind.LessThan, linePos);
+                    return new Lexeme(LexemeKind.LessThan, "<", linePos);
                 case '=':
                     linePos = getLinePosition();
                     this.pos++;
 
                     if (isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.EqualsEquals, linePos);
+                        return new Lexeme(LexemeKind.EqualsEquals, "==", linePos);
                     } else if(this.isAMatch(this.pos, ">")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.EqualsGreaterThan, linePos);
+                        return new Lexeme(LexemeKind.EqualsGreaterThan, "=>", linePos);
                     }
 
-                    return new Lexeme(LexemeKind.Equals, linePos);
+                    return new Lexeme(LexemeKind.Equals, "=", linePos);
                 case '>':
                     linePos = getLinePosition();
                     this.pos++;
 
                     if (isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.GreaterThanEquals, linePos);
+                        return new Lexeme(LexemeKind.GreaterThanEquals, ">=", linePos);
                     }
 
-                    return new Lexeme(LexemeKind.GreaterThan, linePos);
+                    return new Lexeme(LexemeKind.GreaterThan, ">", linePos);
                 case '?':
                     linePos = getLinePosition();
                     this.pos++;
-                    return new Lexeme(LexemeKind.QuestionMark, linePos);
+                    return new Lexeme(LexemeKind.QuestionMark, "?", linePos);
                 case '[':
                     linePos = getLinePosition();
                     this.pos++;
@@ -261,10 +261,10 @@ public class BenScriptLexer implements Lexer {
 
                     if (isAMatch(this.pos, "=")) {
                         this.pos++;
-                        return new Lexeme(LexemeKind.CaretEquals, linePos);
+                        return new Lexeme(LexemeKind.CaretEquals, "^=", linePos);
                     }
 
-                    return new Lexeme(LexemeKind.Caret, linePos);
+                    return new Lexeme(LexemeKind.Caret, "^", linePos);
                 case '_':
                     linePos = getLinePosition();
                     value = this.scanIdentifier();
@@ -286,7 +286,7 @@ public class BenScriptLexer implements Lexer {
                     }
 
                     this.pos++;
-                    return new Lexeme(LexemeKind.BarBar, linePos);
+                    return new Lexeme(LexemeKind.BarBar, "||", linePos);
                 case '0':
                 case '1':
                 case '2':
@@ -307,12 +307,13 @@ public class BenScriptLexer implements Lexer {
 
                         String identifierOrKeyword = this.scanIdentifier();
 
-                        if (identifierOrKeyword.equals("true") || identifierOrKeyword.equals("false")) {
-                            return new Lexeme(LexemeKind.BooleanLiteral, identifierOrKeyword);
+                        if (identifierOrKeyword.trim().toLowerCase().equals("true")
+                                || identifierOrKeyword.trim().toLowerCase().equals("false")) {
+                            return new Lexeme(LexemeKind.BooleanLiteral, identifierOrKeyword.trim().toLowerCase());
                         }
 
-                        if (this.keywordMap.containsKey(identifierOrKeyword)) {
-                            return new Lexeme(keywordMap.get(identifierOrKeyword), linePos);
+                        if (this.keywordMap.containsKey(identifierOrKeyword.trim().toLowerCase())) {
+                            return new Lexeme(keywordMap.get(identifierOrKeyword.trim().toLowerCase()), linePos);
                         }
 
                         return new Lexeme(LexemeKind.Identifier, identifierOrKeyword, linePos);
@@ -388,7 +389,6 @@ public class BenScriptLexer implements Lexer {
             } else {
                 break;
             }
-
         }
 
         return sb.toString();
@@ -401,6 +401,7 @@ public class BenScriptLexer implements Lexer {
         }
 
         char quote = this.text.charAt(this.pos);
+        boolean usesDoubleQuotes = quote == '"';
         this.pos++;
 
         if (quote != '"' && quote != '\'') {
@@ -415,7 +416,7 @@ public class BenScriptLexer implements Lexer {
             char ch = this.text.charAt(this.pos);
 
             if (isAMatch(this.pos, "\\")) {
-                sb.append(scanEscapeSequence());
+                sb.append(scanEscapeSequence(usesDoubleQuotes));
             } else if (isAMatch(this.pos, "\n")) {
                 throw new LexerException("Unexpected new-line character in string");
             } else if (quote == ch) {
@@ -435,7 +436,7 @@ public class BenScriptLexer implements Lexer {
         return sb.toString();
     }
 
-    private String scanEscapeSequence() throws LexerException {
+    private String scanEscapeSequence(boolean usesDoubleQuotes) throws LexerException {
 
         StringBuilder sb = new StringBuilder();
 
@@ -446,7 +447,15 @@ public class BenScriptLexer implements Lexer {
         sb.append(this.text.charAt(this.pos));
         this.pos++;
 
-        if (!isAMatch(this.pos, new char[] { '\'', '\"', '\\', 't', 'n' })) {
+        if (isAMatch(this.pos, "'") && !usesDoubleQuotes) {
+            throw new LexerException("Cannot use escaped single quote within single quotes");
+        }
+
+        if (isAMatch(this.pos, "\"") && usesDoubleQuotes) {
+            throw new LexerException("Cannot use escaped double quote within double quotes");
+        }
+
+        if (!isAMatch(this.pos, new char[] { '\'', '"', '\\', 't', 'n' })) {
             throw new LexerException(error("Unexpected char " + this.text.charAt(this.pos) + " found in escape sequence"));
         }
 

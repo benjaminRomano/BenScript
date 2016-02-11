@@ -4,7 +4,7 @@ import org.bromano.benscript.nodes.expressions.Expression;
 
 public class ForStatement implements Statement {
     public VariableDeclarationStatement initializationStatement;
-    public Expression conditionalStatement;
+    public Expression conditionalExpression;
     public Expression incrementalExpression;
     public Statement statement;
 }

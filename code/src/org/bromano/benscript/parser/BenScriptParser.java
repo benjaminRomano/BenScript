@@ -6,7 +6,6 @@ import org.bromano.benscript.nodes.expressions.Expression;
 import org.bromano.benscript.nodes.Program;
 import org.bromano.benscript.nodes.statements.*;
 import org.bromano.benscript.parser.parslets.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -254,7 +253,7 @@ public class BenScriptParser implements Parser {
         forStatement.initializationStatement = this.parseVariableDeclarationStatement();
 
         if (this.expressionPending()) {
-            forStatement.conditionalStatement = this.parseExpression();
+            forStatement.conditionalExpression = this.parseExpression();
         }
 
         this.match(LexemeKind.Semicolon);
@@ -315,9 +314,7 @@ public class BenScriptParser implements Parser {
 
         this.match(LexemeKind.Equals);
 
-        variableDeclarationStatement.expression = this.parseExpression();
-
-        this.match(LexemeKind.Semicolon);
+        variableDeclarationStatement.statement = this.parseExpressionStatement();
 
         return variableDeclarationStatement;
     }

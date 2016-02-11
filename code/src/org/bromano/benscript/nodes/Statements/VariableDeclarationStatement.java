@@ -5,5 +5,5 @@ import org.bromano.benscript.nodes.expressions.Expression;
 
 public class VariableDeclarationStatement implements Statement {
     public Lexeme name;
-    public Expression expression;
+    public ExpressionStatement statement;
 }

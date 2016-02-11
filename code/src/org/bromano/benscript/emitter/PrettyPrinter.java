@@ -19,10 +19,11 @@ public class PrettyPrinter {
     }
 
     public void increaseIndent() {
-
+        this.indentLevel += 1;
     }
 
     public void decreaseIndent() {
+        this.indentLevel -= 1;
 
     }
 
