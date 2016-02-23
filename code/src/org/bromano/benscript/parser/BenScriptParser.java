@@ -469,6 +469,7 @@ public class BenScriptParser implements Parser {
         map.put(LexemeKind.IntegerLiteral, new IntegerLiteralParslet());
         map.put(LexemeKind.BooleanLiteral, new BooleanLiteralParslet());
         map.put(LexemeKind.StringLiteral, new StringLiteralParslet());
+        map.put(LexemeKind.NullKeyword, new NullLiteralParslet());
 
         map.put(LexemeKind.OpenBracket, new ArrayParslet());
         map.put(LexemeKind.OpenBrace, new ObjectParslet());
