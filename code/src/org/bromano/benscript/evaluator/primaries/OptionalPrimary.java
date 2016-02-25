@@ -13,9 +13,10 @@ public class OptionalPrimary<T> extends BasePrimary<T> {
         return this.value.getValue();
     }
 
-    public OptionalPrimary(Primary<T> value) {
-        this.type = value.getType();
+    public OptionalPrimary(Primary<T> value) throws EvaluatorException {
+
         this.value = value;
+        this.type = value.getType();
     }
 
     @Override
@@ -109,7 +110,7 @@ public class OptionalPrimary<T> extends BasePrimary<T> {
 
     @Override
     public Primary access(String prop) throws EvaluatorException {
-        if (this.value instanceof NullPrimary) {
+        if (this.value.getType() == PrimaryType.Null) {
             return new NullPrimary();
         }
 

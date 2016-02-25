@@ -27,8 +27,12 @@ public class Main {
 //                "(a,b) => { console.println('this should work'); };");
 
         Lexer s = new BenScriptLexer("" +
-                "var a = { a: 5 };" +
-                "a['a'];"
+                "var a = { a: 5, b: {} };" +
+                "a.a = 4;" +
+                "a.b = {};" +
+                "a.b.c = 1;" +
+                "a.b.d?.e;" +
+                "a['b']?.c;"
         );
 
         List<Lexeme> lexemeStream = s.getLexStream();

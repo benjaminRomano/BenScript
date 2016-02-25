@@ -6,7 +6,7 @@ import org.bromano.benscript.evaluator.primaries.NullPrimary;
 import org.bromano.benscript.evaluator.primaries.Primary;
 import org.bromano.benscript.lexer.Lexeme;
 
-public class NameExpression implements Expression {
+public class IdentifierExpression implements Expression {
     public Lexeme name;
 
     @Override

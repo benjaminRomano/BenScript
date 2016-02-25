@@ -10,5 +10,7 @@ public enum PrimaryType {
     Integer,
     Break,
     Return,
-    Continue
+    Continue,
+    Identifier,
+    ObjectIdentifier
 }

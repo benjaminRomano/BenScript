@@ -1,5 +1,6 @@
 package org.bromano.benscript.evaluator.primaries;
 
+import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
 
 import java.util.List;
@@ -84,6 +85,41 @@ public abstract class BasePrimary<T> implements Primary<T> {
         } catch (EvaluatorException e) {
             throw new EvaluatorException("Not Equal not supported by " + type.name());
         }
+    }
+
+    @Override
+    public Primary assign(Primary rhs) throws EvaluatorException {
+        throw new EvaluatorException("Assignment not supported by " + type.name());
+    }
+
+    @Override
+    public Primary addAssign(Primary rhs) throws EvaluatorException {
+        return this.assign(this.add(rhs));
+    }
+
+    @Override
+    public Primary subtractAssign(Primary rhs) throws EvaluatorException {
+        return this.assign(this.subtract(rhs));
+    }
+
+    @Override
+    public Primary multiplyAssign(Primary rhs) throws EvaluatorException {
+        return this.assign(this.multiply(rhs));
+    }
+
+    @Override
+    public Primary divideAssign(Primary rhs) throws EvaluatorException {
+        return this.assign(this.divide(rhs));
+    }
+
+    @Override
+    public Primary moduloAssign(Primary rhs) throws EvaluatorException {
+        return this.assign(this.modulo(rhs));
+    }
+
+    @Override
+    public Primary exponentAssign(Primary rhs) throws EvaluatorException {
+        return this.assign(this.exponent(rhs));
     }
 
     public Primary index(Primary index) throws EvaluatorException {

@@ -3,9 +3,7 @@ package org.bromano.benscript.evaluator.primaries;
 import org.bromano.benscript.evaluator.BenScriptObject;
 import org.bromano.benscript.evaluator.EvaluatorException;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ObjectPrimary extends BasePrimary<BenScriptObject> {
 
@@ -61,11 +59,9 @@ public class ObjectPrimary extends BasePrimary<BenScriptObject> {
 
     @Override
     public Primary access(String prop) throws EvaluatorException {
-        if (!this.bsObject.values.containsKey(prop)) {
-            return new NullPrimary();
-        }
+        List<String> props = new ArrayList<>();
 
-        return this.bsObject.values.get(prop);
+        return new ObjectIdentifierPrimary(this.bsObject, prop);
     }
 
     @Override

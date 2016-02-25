@@ -2,22 +2,21 @@ package org.bromano.benscript.parser.parslets;
 
 import org.bromano.benscript.lexer.Lexeme;
 import org.bromano.benscript.nodes.expressions.Expression;
-import org.bromano.benscript.nodes.expressions.NameExpression;
-import org.bromano.benscript.nodes.expressions.UnaryExpression;
+import org.bromano.benscript.nodes.expressions.IdentifierExpression;
 import org.bromano.benscript.parser.Parser;
 import org.bromano.benscript.parser.ParserException;
 
-public class NameParslet implements PrefixParslet {
+public class IdentifierParslet implements PrefixParslet {
 
-    public NameParslet() {
+    public IdentifierParslet() {
     }
 
     public Expression parse(Parser parser, Lexeme lexeme) throws ParserException {
 
-        NameExpression nameExpression = new NameExpression();
+        IdentifierExpression identifierExpression = new IdentifierExpression();
 
-        nameExpression.name = lexeme;
+        identifierExpression.name = lexeme;
 
-        return nameExpression;
+        return identifierExpression;
     }
 }

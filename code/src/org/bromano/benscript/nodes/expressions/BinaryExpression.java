@@ -33,7 +33,6 @@ public class BinaryExpression implements Expression {
             }
         }
 
-
         Primary rhs = right.evaluate(context);
 
         switch (operator.kind) {
@@ -49,6 +48,13 @@ public class BinaryExpression implements Expression {
             case GreaterThanEquals: return lhs.greaterThanEquals(rhs);
             case EqualsEquals: return lhs.equals(rhs);
             case ExclamationEquals: return lhs.notEquals(rhs);
+            case Equals: return lhs.assign(rhs);
+            case PlusEquals: return lhs.addAssign(rhs);
+            case MinusEquals: return lhs.subtractAssign(rhs);
+            case AsteriskEquals: return lhs.multiplyAssign(rhs);
+            case SlashEquals: return lhs.divideAssign(rhs);
+            case PercentEquals: return lhs.moduloAssign(rhs);
+            case CaretEquals: return lhs.exponentAssign(rhs);
         }
 
         throw new EvaluatorException("Could not interpret binary operator: " + operator.value);

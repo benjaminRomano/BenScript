@@ -465,7 +465,7 @@ public class BenScriptParser implements Parser {
         map.put(LexemeKind.Exclamation, new PrefixOperatorParslet(Precedence.PREFIX));
         map.put(LexemeKind.Minus, new PrefixOperatorParslet(Precedence.PREFIX));
 
-        map.put(LexemeKind.Identifier, new NameParslet());
+        map.put(LexemeKind.Identifier, new IdentifierParslet());
         map.put(LexemeKind.IntegerLiteral, new IntegerLiteralParslet());
         map.put(LexemeKind.BooleanLiteral, new BooleanLiteralParslet());
         map.put(LexemeKind.StringLiteral, new StringLiteralParslet());

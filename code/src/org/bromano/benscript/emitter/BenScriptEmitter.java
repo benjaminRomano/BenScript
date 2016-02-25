@@ -270,14 +270,21 @@ public class BenScriptEmitter implements Emitter {
         this.emitExpression(expression.expression);
     }
 
-    private void emitNameExpression(NameExpression expression) {
+    private void emitNameExpression(IdentifierExpression expression) {
 
         this.prettyPrinter.append(expression.name.value);
     }
 
     private void emitObjectExpression(ObjectExpression expression) throws EmitterException {
 
+        if (expression.keyValues.size() == 0) {
+            this.prettyPrinter.append("{}");
+            return;
+        }
+
         this.prettyPrinter.append("{ \n");
+
+
         this.prettyPrinter.increaseIndent();
 
         int i = 0;
@@ -356,9 +363,9 @@ public class BenScriptEmitter implements Emitter {
 
             this.emitLambdaExpression((LambdaExpression) expression);
 
-        } else if (expression instanceof NameExpression) {
+        } else if (expression instanceof IdentifierExpression) {
 
-            this.emitNameExpression((NameExpression) expression);
+            this.emitNameExpression((IdentifierExpression) expression);
 
         } else if (expression instanceof ObjectExpression) {
 
