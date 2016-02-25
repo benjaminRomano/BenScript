@@ -46,6 +46,11 @@ public class StringPrimary extends BasePrimary<String> {
     }
 
     @Override
+    public Primary optional() throws EvaluatorException {
+        return new OptionalPrimary<>(this);
+    }
+
+    @Override
     public Primary not() throws EvaluatorException {
         return new BooleanPrimary(this.value == null);
     }

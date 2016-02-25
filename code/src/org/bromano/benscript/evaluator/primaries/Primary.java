@@ -6,6 +6,7 @@ import org.bromano.benscript.evaluator.EvaluatorException;
 import java.util.List;
 
 public interface Primary<T> {
+    PrimaryType getType();
     T getValue() throws EvaluatorException;
     StringPrimary castToString() throws EvaluatorException;
     BooleanPrimary castToBoolean() throws EvaluatorException;
@@ -26,6 +27,7 @@ public interface Primary<T> {
     Primary lessThanEquals(Primary rhs) throws EvaluatorException;
     Primary greaterThanEquals(Primary rhs) throws EvaluatorException;
     Primary equals(Primary rhs) throws EvaluatorException;
+    Primary notEquals(Primary rhs) throws EvaluatorException;
 
     Primary index(Primary index) throws EvaluatorException;
     Primary access(String prop) throws EvaluatorException;

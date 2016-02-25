@@ -10,6 +10,10 @@ public abstract class BasePrimary<T> implements Primary<T> {
 
     public abstract T getValue() throws EvaluatorException;
 
+    public PrimaryType getType() {
+        return this.type;
+    }
+
     public StringPrimary castToString() throws EvaluatorException {
         throw new EvaluatorException("Cannot cast " + type.name() + " to string");
     }
@@ -74,6 +78,14 @@ public abstract class BasePrimary<T> implements Primary<T> {
         throw new EvaluatorException("Equal not supported by " + type.name());
     }
 
+    public Primary notEquals(Primary rhs) throws EvaluatorException {
+        try {
+           return this.equals(rhs).not();
+        } catch (EvaluatorException e) {
+            throw new EvaluatorException("Not Equal not supported by " + type.name());
+        }
+    }
+
     public Primary index(Primary index) throws EvaluatorException {
         throw new EvaluatorException("Indexing access not supported by " + type.name());
     }
@@ -96,6 +108,17 @@ public abstract class BasePrimary<T> implements Primary<T> {
 
     public Primary not() throws EvaluatorException {
         throw new EvaluatorException("Not not supported by " + type.name());
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return this.type.name() + ": " + this.castToString().getValue();
+        } catch (EvaluatorException e) {
+            //Do nothing
+        }
+
+        return this.type.name();
     }
 }
 

@@ -1,4 +1,6 @@
 package org.bromano.benscript.nodes.statements;
 
-public interface Statement {
+import org.bromano.benscript.nodes.ParserNode;
+
+public interface Statement extends ParserNode {
 }

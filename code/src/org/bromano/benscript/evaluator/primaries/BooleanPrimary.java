@@ -37,6 +37,11 @@ public class BooleanPrimary extends BasePrimary<Boolean> {
     }
 
     @Override
+    public Primary optional() throws EvaluatorException {
+        return new OptionalPrimary<>(this);
+    }
+
+    @Override
     public Primary not() throws EvaluatorException {
         return new BooleanPrimary(!this.value);
     }

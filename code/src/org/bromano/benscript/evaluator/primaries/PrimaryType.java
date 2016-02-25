@@ -7,5 +7,8 @@ public enum PrimaryType {
     Array,
     String,
     Lambda,
-    Integer
+    Integer,
+    Break,
+    Return,
+    Continue
 }

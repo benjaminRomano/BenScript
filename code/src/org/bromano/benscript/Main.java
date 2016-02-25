@@ -3,6 +3,8 @@ package org.bromano.benscript;
 import org.bromano.benscript.emitter.BenScriptEmitter;
 import org.bromano.benscript.emitter.Emitter;
 import org.bromano.benscript.emitter.EmitterException;
+import org.bromano.benscript.evaluator.Environment;
+import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.lexer.BenScriptLexer;
 import org.bromano.benscript.lexer.Lexeme;
 import org.bromano.benscript.lexer.Lexer;
@@ -16,13 +18,18 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws LexerException, ParserException, EmitterException {
+    public static void main(String[] args) throws LexerException, ParserException, EmitterException, EvaluatorException {
+
+//        Lexer s = new BenScriptLexer("" +
+//                "var a = 1 * 2 + a['hello'](arg1,arg2);\n" +
+//                "var a = { a: 5 + 5, b: 6 - 1 };\n" +
+//                "var b = \"hel'lo\";\n" +
+//                "(a,b) => { console.println('this should work'); };");
 
         Lexer s = new BenScriptLexer("" +
-                "var a = 1 * 2 + a['hello'](arg1,arg2);\n" +
-                "var a = { a: 5 + 5, b: 6 - 1 };\n" +
-                "var b = \"hel'lo\";\n" +
-                "(a,b) => { console.println('this should work'); };");
+                "var a = { a: 5 };" +
+                "a['a'];"
+        );
 
         List<Lexeme> lexemeStream = s.getLexStream();
 
@@ -35,6 +42,8 @@ public class Main {
         Emitter emitter = new BenScriptEmitter();
 
         System.out.println(emitter.emit(program));
+
+        System.out.println(program.evaluate(new Environment()));
 
     }
 }

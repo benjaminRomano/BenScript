@@ -56,7 +56,7 @@ public class ObjectPrimary extends BasePrimary<BenScriptObject> {
 
     @Override
     public Primary index(Primary index) throws EvaluatorException {
-        return this.access(index.toString());
+        return this.access(index.castToString().getValue());
     }
 
     @Override
@@ -76,6 +76,11 @@ public class ObjectPrimary extends BasePrimary<BenScriptObject> {
     @Override
     public Primary and(Primary rhs) throws EvaluatorException {
         return this.castToBoolean().or(rhs.castToBoolean());
+    }
+
+    @Override
+    public Primary optional() throws EvaluatorException {
+        return new OptionalPrimary<>(this);
     }
 
     @Override

@@ -86,4 +86,9 @@ public class IntegerPrimary extends BasePrimary<Integer> {
     public Primary minus() throws EvaluatorException {
         return new IntegerPrimary(-this.value);
     }
+
+    @Override
+    public Primary optional() throws EvaluatorException {
+        return new OptionalPrimary<>(this);
+    }
 }

@@ -17,8 +17,6 @@ public class BenScriptEmitter implements Emitter {
 
         this.prettyPrinter = new PrettyPrinter();
 
-        StringBuilder sb = new StringBuilder();
-
         for (Statement s : program.statements) {
             this.emitStatement(s);
         }
@@ -169,7 +167,7 @@ public class BenScriptEmitter implements Emitter {
 
         this.emitExpression(expression.expression);
         this.prettyPrinter.append("[");
-        this.emitExpression(expression.accessorExpression);
+        this.emitExpression(expression.indexExpression);
         this.prettyPrinter.append("]");
     }
 

@@ -16,7 +16,7 @@ public class IndexParslet implements InfixParslet {
 
         indexExpression.expression = lhs;
 
-        indexExpression.accessorExpression = parser.parseExpression(0);
+        indexExpression.indexExpression = parser.parseExpression(0);
 
         parser.match(LexemeKind.CloseBracket);
 

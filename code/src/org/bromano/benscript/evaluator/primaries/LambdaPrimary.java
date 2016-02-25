@@ -66,6 +66,11 @@ public class LambdaPrimary extends BasePrimary<Statement> {
     }
 
     @Override
+    public Primary optional() throws EvaluatorException {
+        return new OptionalPrimary<>(this);
+    }
+
+    @Override
     public Primary not() throws EvaluatorException {
         return new BooleanPrimary(false);
     }

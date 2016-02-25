@@ -11,6 +11,8 @@ public class ArrayPrimary extends BasePrimary<BenScriptArray> {
 
 
     public ArrayPrimary(BenScriptArray bsArray) {
+
+        this.type = PrimaryType.Array;
         this.bsArray = bsArray;
     }
 
@@ -64,6 +66,11 @@ public class ArrayPrimary extends BasePrimary<BenScriptArray> {
     @Override
     public Primary equals(Primary rhs) throws EvaluatorException {
         return new BooleanPrimary(this.bsArray.values.equals(rhs.getValue()));
+    }
+
+    @Override
+    public Primary optional() throws EvaluatorException {
+        return new OptionalPrimary<>(this);
     }
 
     @Override

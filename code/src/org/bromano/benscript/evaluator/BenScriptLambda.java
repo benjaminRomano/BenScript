@@ -38,7 +38,7 @@ public class BenScriptLambda {
         if (this.params.size() < args.size()) {
             throw new EvaluatorException("Too many parameters supplied.");
         } else if (this.params.size() > args.size()){
-            throw new EvaluatorException("Not enough parameters supplied.")
+            throw new EvaluatorException("Not enough parameters supplied.");
         }
 
         for (int i = 0; i < this.params.size(); i++) {

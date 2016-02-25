@@ -36,6 +36,11 @@ public class NullPrimary extends BasePrimary<Object> {
     }
 
     @Override
+    public Primary optional() throws EvaluatorException {
+        return new OptionalPrimary<>(this);
+    }
+
+    @Override
     public Primary not() throws EvaluatorException {
         return new BooleanPrimary(true);
     }
