@@ -490,6 +490,9 @@ public class BenScriptParser implements Parser {
         map.put(LexemeKind.PlusEquals, new BinaryOperatorParslet(Precedence.ASSIGNMENT, true));
         map.put(LexemeKind.CaretEquals, new BinaryOperatorParslet(Precedence.ASSIGNMENT, true));
 
+        map.put(LexemeKind.AmpersandAmpersand, new BinaryOperatorParslet(Precedence.LOGICALAND, true));
+        map.put(LexemeKind.BarBar, new BinaryOperatorParslet(Precedence.LOGICALOR, true));
+
         map.put(LexemeKind.EqualsEquals, new BinaryOperatorParslet(Precedence.EQUALITY, true));
 
         map.put(LexemeKind.LessThan, new BinaryOperatorParslet(Precedence.RELATIONAL, false));
@@ -506,12 +509,10 @@ public class BenScriptParser implements Parser {
 
         map.put(LexemeKind.Caret, new BinaryOperatorParslet(Precedence.EXPONENT, true));
 
-        map.put(LexemeKind.PlusPlus, new PostfixOperatorParslet(Precedence.POSTFIX));
-        map.put(LexemeKind.MinusMinus, new PostfixOperatorParslet(Precedence.POSTFIX));
         map.put(LexemeKind.QuestionMark, new PostfixOperatorParslet(Precedence.POSTFIX));
 
         map.put(LexemeKind.Dot, new PropertyAccessorParslet());
-        map.put(LexemeKind.OpenBracket, new AccessorParslet());
+        map.put(LexemeKind.OpenBracket, new IndexParslet());
         map.put(LexemeKind.OpenParen, new CallParslet());
 
         return map;

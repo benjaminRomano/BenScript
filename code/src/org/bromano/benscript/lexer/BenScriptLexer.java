@@ -139,9 +139,6 @@ public class BenScriptLexer implements Lexer {
                     if(isAMatch(this.pos, "=")) {
                         this.pos++;
                         return new Lexeme(LexemeKind.PlusEquals, "+=", linePos);
-                    } else if(isAMatch(this.pos, "+")) {
-                        this.pos++;
-                        return new Lexeme(LexemeKind.PlusPlus, "++", linePos);
                     }
 
                     return new Lexeme(LexemeKind.Plus, "+", linePos);
@@ -156,9 +153,6 @@ public class BenScriptLexer implements Lexer {
                     if(isAMatch(this.pos, "=")) {
                         this.pos++;
                         return new Lexeme(LexemeKind.MinusEquals, "-=", linePos);
-                    } else if(isAMatch(this.pos, "-")) {
-                        this.pos++;
-                        return new Lexeme(LexemeKind.MinusMinus, "--", linePos);
                     }
 
                     return new Lexeme(LexemeKind.Minus, "-", linePos);

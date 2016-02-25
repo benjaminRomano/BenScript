@@ -50,8 +50,6 @@ public enum LexemeKind {
     SlashEquals,
     PercentEquals,
     CaretEquals,
-    PlusPlus,
-    MinusMinus,
     Comma,
     Dot,
 }

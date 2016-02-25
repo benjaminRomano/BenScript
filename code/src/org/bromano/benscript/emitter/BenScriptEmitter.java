@@ -165,12 +165,17 @@ public class BenScriptEmitter implements Emitter {
         }
     }
 
-    private void emitAccessorExpression(AccessorExpression expression) throws EmitterException {
+    private void emitAccessorExpression(IndexExpression expression) throws EmitterException {
 
         this.emitExpression(expression.expression);
         this.prettyPrinter.append("[");
         this.emitExpression(expression.accessorExpression);
         this.prettyPrinter.append("]");
+    }
+
+    private void emitNullLiteralExpression(NullLiteralExpression expression) throws EmitterException {
+
+        this.prettyPrinter.append("null");
     }
 
     private void emitArrayExpression(ArrayExpression expression) throws EmitterException {
@@ -322,13 +327,17 @@ public class BenScriptEmitter implements Emitter {
 
             this.emitPropertyAccessorExpression((PropertyAccessorExpression) expression);
 
-        } else if (expression instanceof AccessorExpression) {
+        } else if (expression instanceof IndexExpression) {
 
-            this.emitAccessorExpression((AccessorExpression) expression);
+            this.emitAccessorExpression((IndexExpression) expression);
 
         } else if (expression instanceof ArrayExpression) {
 
             this.emitArrayExpression((ArrayExpression) expression);
+
+        } else if (expression instanceof NullLiteralExpression) {
+
+            this.emitNullLiteralExpression((NullLiteralExpression) expression);
 
         } else if (expression instanceof BinaryExpression) {
             this.emitBinaryExpression((BinaryExpression) expression);

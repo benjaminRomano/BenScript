@@ -70,8 +70,8 @@ escaped-char: \'
 
 expression: assignment-expression           
 
-assignment-expression: assignment-expression assignment-op equality-expression
-                     | equality-expression
+assignment-expression: assignment-expression assignment-op logical-and-expression
+                     | logical-and-expression
 
 assignment-op: =
              | +=
@@ -81,6 +81,12 @@ assignment-op: =
              | %=
              | ^=
              
+logical-and-expression: logical-and-expression && logical-or-expression
+                   | logical-or-expression
+                   
+logical-or-expression: logical-or-expression || equality-expression
+                   | equality-expression    
+                                 
 equality-expression: equality-expression equality-op relational-expression
                    | relational-expression
 
@@ -123,9 +129,7 @@ postfix-expression: postfix-expression . IDENTIFIER
                   | postfix-expression postfix-op
                   | call-expression
          
-postfix-op: ++
-          | --
-          | ?
+postfix-op: ?
           
 call-expression: call-expression ( argument-list* )
                | primary-expression
@@ -156,11 +160,16 @@ lambda-expression: ( param-list ) => statement
 // Expression operator precedence
 // literal, identifier, array, object, lambda, parenthesis = 0
 // Assignment = 1
-// equality = 2
-// relational = 3
-// sum, subtraction = 4
-// multiplication, divide, modulus = 5
-// exponent (right assosciative) = 6
-// prefix ( !, -) = 7
-// postfix (++, --, accessors, ?) = 8
-// function call = 9
+// logical-and = 2
+// logical-or = 3
+// equality = 4
+// relational = 5
+// sum, subtraction = 6
+// multiplication, divide, modulus = 7
+// exponent (right assosciative) = 8
+// prefix ( !, -) = 9
+// postfix (++, --, accessors, ?) = 10
+// function call = 11
+
+//Primaries
+// Null, Lambda, Integer, Boolean, String, Array, Object
