@@ -1,6 +1,6 @@
 package org.bromano.benscript.evaluator.primaries;
 
-import org.bromano.benscript.evaluator.BenScriptArray;
+import org.bromano.benscript.evaluator.complexTypes.BenScriptArray;
 import org.bromano.benscript.evaluator.EvaluatorException;
 
 import java.util.Iterator;

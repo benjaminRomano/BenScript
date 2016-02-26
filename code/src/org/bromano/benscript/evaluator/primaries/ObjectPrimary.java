@@ -1,7 +1,8 @@
 package org.bromano.benscript.evaluator.primaries;
 
-import org.bromano.benscript.evaluator.BenScriptObject;
+import org.bromano.benscript.evaluator.complexTypes.BenScriptBasicObject;
 import org.bromano.benscript.evaluator.EvaluatorException;
+import org.bromano.benscript.evaluator.complexTypes.BenScriptObject;
 
 import java.util.*;
 
@@ -29,20 +30,20 @@ public class ObjectPrimary extends BasePrimary<BenScriptObject> {
     public StringPrimary castToString() throws EvaluatorException {
         StringBuilder sb = new StringBuilder();
 
-        Iterator<Map.Entry<String, Primary>> entries = this.bsObject.values.entrySet().iterator();
+        Iterator<Map.Entry<String, Primary>> entries = this.bsObject.getValues().entrySet().iterator();
 
-        sb.append("{");
+        sb.append("{ ");
 
         while (entries.hasNext()) {
             Map.Entry<String, Primary> entry = entries.next();
-            sb.append("\n" + entry + ": " + entry.getValue().castToString().getValue());
+            sb.append(entry.getKey() + ": " + entry.getValue().castToString().getValue());
 
             if (entries.hasNext()) {
-                sb.append(",");
+                sb.append(", ");
             }
         }
 
-        sb.append("\n}");
+        sb.append(" }");
 
         return new StringPrimary(sb.toString());
     }

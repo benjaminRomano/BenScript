@@ -4,6 +4,7 @@ import org.bromano.benscript.lexer.Lexeme;
 import org.bromano.benscript.lexer.LexemeKind;
 import org.bromano.benscript.nodes.Program;
 import org.bromano.benscript.nodes.expressions.Expression;
+import org.bromano.benscript.nodes.expressions.LambdaExpression;
 import org.bromano.benscript.nodes.statements.*;
 import org.bromano.benscript.parser.parslets.*;
 
@@ -339,7 +340,11 @@ public class BenScriptParser implements Parser {
 
         this.match(LexemeKind.Equals);
 
-        variableDeclarationStatement.statement = this.parseExpressionStatement();
+        variableDeclarationStatement.expression = this.parseExpression();
+
+        if (!(variableDeclarationStatement.expression instanceof LambdaExpression)) {
+            this.match(LexemeKind.Semicolon);
+        }
 
         return variableDeclarationStatement;
     }
@@ -390,7 +395,8 @@ public class BenScriptParser implements Parser {
                 || returnStatementPending()
                 || breakStatementPending()
                 || continueStatementPending()
-                || variableDeclarationPending();
+                || variableDeclarationPending()
+                || functionDeclarationStatementPending();
     }
 
     private boolean compoundStatementPending() {

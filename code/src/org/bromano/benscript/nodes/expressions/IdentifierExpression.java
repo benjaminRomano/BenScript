@@ -12,10 +12,6 @@ public class IdentifierExpression implements Expression {
     @Override
     public Primary evaluate(Environment context) throws EvaluatorException {
 
-        if (!context.variables.containsKey(name.value)) {
-            return new NullPrimary();
-        }
-
         return context.getVariable(name.value);
     }
 }

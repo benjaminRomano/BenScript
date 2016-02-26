@@ -1,6 +1,6 @@
 package org.bromano.benscript.nodes.expressions;
 
-import org.bromano.benscript.evaluator.BenScriptObject;
+import org.bromano.benscript.evaluator.complexTypes.BenScriptBasicObject;
 import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.evaluator.primaries.ObjectPrimary;
@@ -26,6 +26,6 @@ public class ObjectExpression implements Expression {
             primaryKeyValues.put(keyValue.getKey().value, keyValue.getValue().evaluate(context));
         }
 
-        return new ObjectPrimary(new BenScriptObject(primaryKeyValues));
+        return new ObjectPrimary(new BenScriptBasicObject(primaryKeyValues));
     }
 }

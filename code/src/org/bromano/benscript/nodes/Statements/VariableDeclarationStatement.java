@@ -9,12 +9,12 @@ import org.bromano.benscript.nodes.expressions.Expression;
 
 public class VariableDeclarationStatement implements Statement {
     public Lexeme name;
-    public ExpressionStatement statement;
+    public Expression expression;
 
     @Override
     public Primary evaluate(Environment context) throws EvaluatorException {
 
-        context.variables.put(name.value, statement.evaluate(context));
+        context.addPrimary(name.value, expression.evaluate(context));
 
         return new NullPrimary();
     }

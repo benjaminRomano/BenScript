@@ -48,7 +48,7 @@ public class BenScriptEmitter implements Emitter {
         }
 
         this.prettyPrinter.decreaseIndent();
-        this.prettyPrinter.append("}");
+        this.prettyPrinter.append("}\n");
     }
 
     private void emitWhileStatement(WhileStatement statement) throws EmitterException {
@@ -94,6 +94,7 @@ public class BenScriptEmitter implements Emitter {
         this.prettyPrinter.append("func ");
         this.prettyPrinter.append(statement.name.value);
         this.emitParamList(statement.parameters);
+        this.prettyPrinter.append(" ");
         this.emitStatement(statement.statement);
     }
 
@@ -115,7 +116,11 @@ public class BenScriptEmitter implements Emitter {
         this.prettyPrinter.append("var ");
         this.prettyPrinter.append(statement.name.value);
         this.prettyPrinter.append(" = ");
-        this.emitExpressionStatement(statement.statement);
+        this.emitExpression(statement.expression);
+
+        if (!(statement.expression instanceof LambdaExpression)) {
+            this.prettyPrinter.append(";\n");
+        }
     }
 
     private void emitStatement(Statement statement) throws EmitterException {

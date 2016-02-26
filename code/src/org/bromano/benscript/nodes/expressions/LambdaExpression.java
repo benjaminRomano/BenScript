@@ -1,6 +1,6 @@
 package org.bromano.benscript.nodes.expressions;
 
-import org.bromano.benscript.evaluator.BenScriptLambda;
+import org.bromano.benscript.evaluator.complexTypes.BenScriptBasicLambda;
 import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.evaluator.primaries.LambdaPrimary;
@@ -22,7 +22,7 @@ public class LambdaExpression implements Expression {
                 .map(l -> l.value)
                 .collect(Collectors.toList());
 
-        BenScriptLambda bsLambda = new BenScriptLambda(context, statement, paramNames);
+        BenScriptBasicLambda bsLambda = new BenScriptBasicLambda(context, statement, paramNames);
 
         return new LambdaPrimary(bsLambda);
     }

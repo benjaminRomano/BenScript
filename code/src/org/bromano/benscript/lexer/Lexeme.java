@@ -30,7 +30,7 @@ public class Lexeme {
     @Override
     public String toString() {
         if (linePos != null) {
-            return this.linePos.toString() + " " + this.kind.name() + " " + this.value;
+            return this.linePos.toString() + " " + this.kind.name() + " " + (this.value != null ? this.value : "");
         }
         return this.kind.name() + " " + this.value;
     }

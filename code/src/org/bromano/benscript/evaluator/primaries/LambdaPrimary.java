@@ -1,6 +1,6 @@
 package org.bromano.benscript.evaluator.primaries;
 
-import org.bromano.benscript.evaluator.BenScriptLambda;
+import org.bromano.benscript.evaluator.complexTypes.BenScriptLambda;
 import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.nodes.statements.Statement;
 
@@ -31,7 +31,12 @@ public class LambdaPrimary extends BasePrimary<Statement> {
     public StringPrimary castToString() throws EvaluatorException {
         StringBuilder paramsList = new StringBuilder();
 
-        Iterator<String> iterator = this.bsLambda.params.iterator();
+        // This is the case for variadic functions. E.x. println/print
+        if (this.bsLambda.getParamNames() == null) {
+            return new StringPrimary("Func<@>");
+        }
+
+        Iterator<String> iterator = this.bsLambda.getParamNames().iterator();
 
         while (iterator.hasNext()) {
 

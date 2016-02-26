@@ -1,5 +1,5 @@
 package org.bromano.benscript.nodes.statements;
-import org.bromano.benscript.evaluator.BenScriptLambda;
+import org.bromano.benscript.evaluator.complexTypes.BenScriptBasicLambda;
 import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.evaluator.primaries.LambdaPrimary;
@@ -9,7 +9,6 @@ import org.bromano.benscript.lexer.Lexeme;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FunctionDeclarationStatement implements Statement {
     public Lexeme name;
@@ -23,10 +22,10 @@ public class FunctionDeclarationStatement implements Statement {
 
         List<String> paramNames = parameters.stream().map((l) -> l.value).collect(Collectors.toList());
 
-        BenScriptLambda bsLambda = new BenScriptLambda(newContext, this.statement, paramNames);
+        BenScriptBasicLambda bsLambda = new BenScriptBasicLambda(newContext, this.statement, paramNames);
         Primary bsLambdaPrimary = new LambdaPrimary(bsLambda);
 
-        context.variables.put(name.value, bsLambdaPrimary);
+        context.addPrimary(name.value, bsLambdaPrimary);
 
         return new NullPrimary();
     }

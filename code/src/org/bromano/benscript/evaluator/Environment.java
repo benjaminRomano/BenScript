@@ -1,6 +1,8 @@
 package org.bromano.benscript.evaluator;
 
+import org.bromano.benscript.evaluator.builtins.Console;
 import org.bromano.benscript.evaluator.primaries.NullPrimary;
+import org.bromano.benscript.evaluator.primaries.ObjectPrimary;
 import org.bromano.benscript.evaluator.primaries.Primary;
 
 import java.util.HashMap;
@@ -8,11 +10,19 @@ import java.util.Map;
 
 public class Environment {
     public Environment parent;
-    public Map<String, Primary> variables;
+    protected Map<String, Primary> variables;
 
     public Environment() {
         this.parent = null;
         this.variables = new HashMap<>();
+    }
+
+    public static Environment createGlobalEnvironment() {
+
+        Environment globalContext = new Environment();
+        globalContext.variables.put("console", new ObjectPrimary(new Console()));
+
+        return globalContext;
     }
 
     public Environment(Environment parent) {
@@ -43,5 +53,9 @@ public class Environment {
         }
 
         return this.parent.getVariable(name);
+    }
+
+    public void addPrimary(String name, Primary value) {
+        this.variables.put(name, value);
     }
 }

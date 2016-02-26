@@ -1,9 +1,9 @@
-package org.bromano.benscript.evaluator;
+package org.bromano.benscript.evaluator.complexTypes;
 
+import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.evaluator.primaries.Primary;
 
 import java.util.List;
-import java.util.Map;
 
 public class BenScriptArray {
 
