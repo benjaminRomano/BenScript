@@ -6,7 +6,7 @@ import org.bromano.benscript.evaluator.complexTypes.BenScriptObject;
 
 import java.util.*;
 
-public class ObjectPrimary extends BasePrimary<BenScriptObject> {
+public class ObjectPrimary extends BasePrimary {
 
     private BenScriptObject bsObject;
 
@@ -14,11 +14,6 @@ public class ObjectPrimary extends BasePrimary<BenScriptObject> {
 
         this.type = PrimaryType.Object;
         this.bsObject = bsObject;
-    }
-
-    @Override
-    public BenScriptObject getValue() throws EvaluatorException {
-        return this.bsObject;
     }
 
     @Override
@@ -50,7 +45,7 @@ public class ObjectPrimary extends BasePrimary<BenScriptObject> {
 
     @Override
     public Primary equals(Primary rhs) throws EvaluatorException {
-        return new BooleanPrimary(this.bsObject.equals(rhs.getValue()));
+        return new BooleanPrimary(this == rhs.getPrimary());
     }
 
     @Override
@@ -77,7 +72,7 @@ public class ObjectPrimary extends BasePrimary<BenScriptObject> {
 
     @Override
     public Primary optional() throws EvaluatorException {
-        return new OptionalPrimary<>(this);
+        return new OptionalPrimary(this);
     }
 
     @Override

@@ -2,7 +2,9 @@ package org.bromano.benscript.evaluator.complexTypes;
 
 import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
+import org.bromano.benscript.evaluator.primaries.NullPrimary;
 import org.bromano.benscript.evaluator.primaries.Primary;
+import org.bromano.benscript.evaluator.primaries.special.ReturnPrimary;
 import org.bromano.benscript.nodes.statements.Statement;
 
 import java.util.List;
@@ -51,6 +53,15 @@ public class BenScriptBasicLambda implements BenScriptLambda {
             newContext.addPrimary(this.paramNames.get(i), args.get(i));
         }
 
-        return statement.evaluate(newContext);
+
+        Primary result = statement.evaluate(newContext);
+
+        if (result instanceof ReturnPrimary) {
+            ReturnPrimary returnPrimary = (ReturnPrimary) result;
+
+            returnPrimary.getValue();
+        }
+
+        return new NullPrimary();
     }
 }

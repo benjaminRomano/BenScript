@@ -2,7 +2,7 @@ package org.bromano.benscript.evaluator.primaries;
 
 import org.bromano.benscript.evaluator.EvaluatorException;
 
-public class StringPrimary extends BasePrimary<String> {
+public class StringPrimary extends BasePrimary {
 
     private String value;
 
@@ -47,7 +47,7 @@ public class StringPrimary extends BasePrimary<String> {
 
     @Override
     public Primary optional() throws EvaluatorException {
-        return new OptionalPrimary<>(this);
+        return new OptionalPrimary(this);
     }
 
     @Override

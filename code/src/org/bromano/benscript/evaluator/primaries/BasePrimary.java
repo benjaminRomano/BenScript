@@ -5,11 +5,9 @@ import org.bromano.benscript.evaluator.EvaluatorException;
 
 import java.util.List;
 
-public abstract class BasePrimary<T> implements Primary<T> {
+public abstract class BasePrimary implements Primary {
 
     protected PrimaryType type;
-
-    public abstract T getValue() throws EvaluatorException;
 
     public PrimaryType getType() {
         return this.type;
@@ -25,6 +23,11 @@ public abstract class BasePrimary<T> implements Primary<T> {
 
     public IntegerPrimary castToInteger() throws EvaluatorException {
         throw new EvaluatorException("Cannot cast " + type.name() + " to integer");
+    }
+
+    @Override
+    public Primary getPrimary() {
+        return this;
     }
 
     public Primary add(Primary rhs) throws EvaluatorException {

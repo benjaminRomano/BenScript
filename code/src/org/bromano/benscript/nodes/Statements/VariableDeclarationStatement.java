@@ -2,6 +2,7 @@ package org.bromano.benscript.nodes.statements;
 
 import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
+import org.bromano.benscript.evaluator.primaries.IdentifierPrimary;
 import org.bromano.benscript.evaluator.primaries.NullPrimary;
 import org.bromano.benscript.evaluator.primaries.Primary;
 import org.bromano.benscript.lexer.Lexeme;
@@ -14,7 +15,7 @@ public class VariableDeclarationStatement implements Statement {
     @Override
     public Primary evaluate(Environment context) throws EvaluatorException {
 
-        context.addPrimary(name.value, expression.evaluate(context));
+        context.addPrimary(name.value, new IdentifierPrimary(expression.evaluate(context)));
 
         return new NullPrimary();
     }

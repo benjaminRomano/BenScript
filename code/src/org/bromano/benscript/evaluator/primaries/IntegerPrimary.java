@@ -2,7 +2,7 @@ package org.bromano.benscript.evaluator.primaries;
 
 import org.bromano.benscript.evaluator.EvaluatorException;
 
-public class IntegerPrimary extends BasePrimary<Integer> {
+public class IntegerPrimary extends BasePrimary {
 
     private Integer value;
 
@@ -12,7 +12,6 @@ public class IntegerPrimary extends BasePrimary<Integer> {
         this.value = value;
     }
 
-    @Override
     public Integer getValue() {
         return this.value;
     }
@@ -89,6 +88,6 @@ public class IntegerPrimary extends BasePrimary<Integer> {
 
     @Override
     public Primary optional() throws EvaluatorException {
-        return new OptionalPrimary<>(this);
+        return new OptionalPrimary(this);
     }
 }

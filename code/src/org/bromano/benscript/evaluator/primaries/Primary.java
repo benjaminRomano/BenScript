@@ -6,12 +6,12 @@ import org.bromano.benscript.evaluator.EvaluatorException;
 
 import java.util.List;
 
-public interface Primary<T> {
+public interface Primary {
     PrimaryType getType();
-    T getValue() throws EvaluatorException;
     StringPrimary castToString() throws EvaluatorException;
     BooleanPrimary castToBoolean() throws EvaluatorException;
     IntegerPrimary castToInteger() throws EvaluatorException;
+    Primary getPrimary();
 
     Primary add(Primary rhs) throws EvaluatorException;
     Primary subtract(Primary rhs) throws EvaluatorException;

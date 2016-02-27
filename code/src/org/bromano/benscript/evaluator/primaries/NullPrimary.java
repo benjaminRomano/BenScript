@@ -3,16 +3,11 @@ package org.bromano.benscript.evaluator.primaries;
 
 import org.bromano.benscript.evaluator.EvaluatorException;
 
-public class NullPrimary extends BasePrimary<Object> {
+public class NullPrimary extends BasePrimary {
     Object value;
 
     public NullPrimary() {
         this.type = PrimaryType.Null;
-    }
-
-    @Override
-    public Object getValue() {
-        return null;
     }
 
     @Override
@@ -36,8 +31,18 @@ public class NullPrimary extends BasePrimary<Object> {
     }
 
     @Override
+    public Primary equals(Primary rhs) throws EvaluatorException {
+        return new BooleanPrimary(rhs.getPrimary() instanceof NullPrimary);
+    }
+
+    @Override
+    public Primary notEquals(Primary rhs) throws EvaluatorException {
+        return this.equals(rhs).not();
+    }
+
+    @Override
     public Primary optional() throws EvaluatorException {
-        return new OptionalPrimary<>(this);
+        return new OptionalPrimary(this);
     }
 
     @Override

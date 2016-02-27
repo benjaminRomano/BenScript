@@ -20,21 +20,23 @@ public class Main {
 
     public static void main(String[] args) throws LexerException, ParserException, EmitterException, EvaluatorException {
 
-        Lexer s = new BenScriptLexer("" +
-                "func printOut(value) { console.println('the value passed in is ', value); }" +
-                "var variableName123 = true;" +
-                "var a = { a: 5, b: {} };" +
-                "a.a = 4;" +
-                "a.b = {};" +
-                "a.b.c = 1;" +
-                "a.b.d?.e?.f;" +
-                "console.println('a.b is ', a.b);" +
-                "a['b']?.c;" +
-                "console.println((2 ^ 1 ^ 3 + 5 - 1 * 0) % 7 == 0);" +
-                "var a = (b) => console.println(b);" +
-                "a('hello');" +
-                "printOut(null);"
-        );
+//        Lexer s = new BenScriptLexer("" +
+//                "func printOut(value) { console.println('the value passed in is ', value); }" +
+//                "var variableName123 = true;" +
+//                "var a = { a: 5, b: {} };" +
+//                "a.a = 4;" +
+//                "a.b = {};" +
+//                "a.b.c = 1;" +
+//                "a.b.d?.e?.f;" +
+//                "console.println('a.b is ', a.b);" +
+//                "a['b']?.c;" +
+//                "console.println((2 ^ 1 ^ 3 + 5 - 1 * 0) % 7 == 0);" +
+//                "var a = (b) => console.println(b);" +
+//                "a('hello');" +
+//                "printOut(null);"
+//        );
+
+        Lexer s = new BenScriptLexer("var b = 5; var a = b; a = 2; console.println(a);");
 
         List<Lexeme> lexemeStream = s.getLexStream();
 

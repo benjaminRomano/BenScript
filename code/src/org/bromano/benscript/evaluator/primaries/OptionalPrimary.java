@@ -4,16 +4,11 @@ import org.bromano.benscript.evaluator.EvaluatorException;
 
 import java.util.List;
 
-public class OptionalPrimary<T> extends BasePrimary<T> {
+public class OptionalPrimary extends BasePrimary {
 
-    private Primary<T> value;
+    private Primary value;
 
-    @Override
-    public T getValue() throws EvaluatorException {
-        return this.value.getValue();
-    }
-
-    public OptionalPrimary(Primary<T> value) throws EvaluatorException {
+    public OptionalPrimary(Primary value) throws EvaluatorException {
 
         this.value = value;
         this.type = value.getType();
@@ -128,7 +123,7 @@ public class OptionalPrimary<T> extends BasePrimary<T> {
 
     @Override
     public Primary optional() throws EvaluatorException {
-        return new OptionalPrimary<>(this);
+        return new OptionalPrimary(this);
     }
 
     @Override

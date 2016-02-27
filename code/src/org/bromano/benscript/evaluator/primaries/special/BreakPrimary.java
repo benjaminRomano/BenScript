@@ -5,18 +5,9 @@ import org.bromano.benscript.evaluator.primaries.BasePrimary;
 import org.bromano.benscript.evaluator.primaries.Primary;
 import org.bromano.benscript.evaluator.primaries.PrimaryType;
 
-public class BreakPrimary extends BasePrimary<Object> {
-
-    Object value;
+public class BreakPrimary extends BasePrimary {
 
     public BreakPrimary() {
         this.type = PrimaryType.Break;
-        this.value = null;
-    }
-
-    @Override
-    public Object getValue() throws EvaluatorException {
-
-        return this.value;
     }
 }

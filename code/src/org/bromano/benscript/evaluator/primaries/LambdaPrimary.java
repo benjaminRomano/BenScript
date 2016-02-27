@@ -7,7 +7,7 @@ import org.bromano.benscript.nodes.statements.Statement;
 import java.util.Iterator;
 import java.util.List;
 
-public class LambdaPrimary extends BasePrimary<Statement> {
+public class LambdaPrimary extends BasePrimary {
 
     BenScriptLambda bsLambda;
 
@@ -15,11 +15,6 @@ public class LambdaPrimary extends BasePrimary<Statement> {
 
         this.type = PrimaryType.Lambda;
         this.bsLambda = bsLambda;
-    }
-
-    @Override
-    public Statement getValue() throws EvaluatorException {
-        throw new EvaluatorException("Cannot extract value from " + this.type.name());
     }
 
     @Override
@@ -52,7 +47,7 @@ public class LambdaPrimary extends BasePrimary<Statement> {
 
     @Override
     public Primary equals(Primary rhs) throws EvaluatorException {
-        return new BooleanPrimary(this.bsLambda.equals(rhs.getValue()));
+        return new BooleanPrimary(this == rhs.getPrimary());
     }
 
     @Override
@@ -72,7 +67,7 @@ public class LambdaPrimary extends BasePrimary<Statement> {
 
     @Override
     public Primary optional() throws EvaluatorException {
-        return new OptionalPrimary<>(this);
+        return new OptionalPrimary(this);
     }
 
     @Override

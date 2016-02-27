@@ -6,7 +6,7 @@ import org.bromano.benscript.evaluator.complexTypes.BenScriptObject;
 
 import java.util.List;
 
-public class ObjectIdentifierPrimary extends BasePrimary<Object> {
+public class ObjectIdentifierPrimary extends BasePrimary {
 
     private BenScriptObject base;
     private String prop;
@@ -16,11 +16,6 @@ public class ObjectIdentifierPrimary extends BasePrimary<Object> {
         this.type = PrimaryType.ObjectIdentifier;
         this.base = base;
         this.prop = prop;
-    }
-
-    @Override
-    public Object getValue() throws EvaluatorException {
-        return this.extractProperty().getValue();
     }
 
     @Override
@@ -41,6 +36,11 @@ public class ObjectIdentifierPrimary extends BasePrimary<Object> {
     @Override
     public IntegerPrimary castToInteger() throws EvaluatorException {
         return this.extractProperty().castToInteger();
+    }
+
+    @Override
+    public Primary getPrimary() {
+        return this.extractProperty();
     }
 
     @Override
@@ -125,7 +125,7 @@ public class ObjectIdentifierPrimary extends BasePrimary<Object> {
 
     @Override
     public Primary optional() throws EvaluatorException {
-        return new OptionalPrimary<>(this);
+        return new OptionalPrimary(this);
     }
 
     @Override

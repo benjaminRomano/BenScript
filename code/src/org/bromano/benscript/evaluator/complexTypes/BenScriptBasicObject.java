@@ -3,6 +3,7 @@ package org.bromano.benscript.evaluator.complexTypes;
 import org.bromano.benscript.evaluator.primaries.NullPrimary;
 import org.bromano.benscript.evaluator.primaries.Primary;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class BenScriptBasicObject implements BenScriptObject {
@@ -11,6 +12,11 @@ public class BenScriptBasicObject implements BenScriptObject {
 
     public BenScriptBasicObject(Map<String, Primary> values) {
         this.values = values;
+    }
+
+    public BenScriptBasicObject() {
+
+        this.values = new HashMap<>();
     }
 
     @Override

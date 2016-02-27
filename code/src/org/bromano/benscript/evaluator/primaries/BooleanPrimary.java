@@ -2,7 +2,7 @@ package org.bromano.benscript.evaluator.primaries;
 
 import org.bromano.benscript.evaluator.EvaluatorException;
 
-public class BooleanPrimary extends BasePrimary<Boolean> {
+public class BooleanPrimary extends BasePrimary {
 
    private Boolean value;
 
@@ -11,7 +11,6 @@ public class BooleanPrimary extends BasePrimary<Boolean> {
         this.value = value;
     }
 
-    @Override
     public Boolean getValue() {
         return this.value;
     }
@@ -38,7 +37,7 @@ public class BooleanPrimary extends BasePrimary<Boolean> {
 
     @Override
     public Primary optional() throws EvaluatorException {
-        return new OptionalPrimary<>(this);
+        return new OptionalPrimary(this);
     }
 
     @Override

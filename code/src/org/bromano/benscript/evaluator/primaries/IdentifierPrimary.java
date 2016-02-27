@@ -3,115 +3,113 @@ package org.bromano.benscript.evaluator.primaries;
 import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
 
-public class IdentifierPrimary extends BasePrimary<Object> {
+public class IdentifierPrimary extends BasePrimary {
 
-    private Environment context;
-    private String variableName;
+    private Primary value;
 
-    public IdentifierPrimary(Environment context, String variableName) {
+    public IdentifierPrimary(Primary value) {
 
-        this.type = PrimaryType.Identifier;
-        this.context = context;
-        this.variableName = variableName;
-    }
-
-    @Override
-    public Object getValue() throws EvaluatorException {
-        return this.getVariable().getValue();
+        this.value  = value;
     }
 
     @Override
     public PrimaryType getType() {
-        return this.getVariable().getType();
+        return this.value.getType();
     }
 
     @Override
     public BooleanPrimary castToBoolean() throws EvaluatorException {
-        return this.getVariable().castToBoolean();
+        return this.value.castToBoolean();
     }
 
     @Override
     public StringPrimary castToString() throws EvaluatorException {
-        return this.getVariable().castToString();
+        return this.value.castToString();
     }
 
     @Override
     public IntegerPrimary castToInteger() throws EvaluatorException {
-        return this.getVariable().castToInteger();
+        return this.value.castToInteger();
+    }
+
+    @Override
+    public Primary getPrimary() {
+        return this.value;
     }
 
     @Override
     public Primary add(Primary rhs) throws EvaluatorException {
-        return this.getVariable().add(rhs);
+        return this.value.add(rhs);
     }
 
     @Override
     public Primary subtract(Primary rhs) throws EvaluatorException {
-        return this.getVariable().subtract(rhs);
+        return this.value.subtract(rhs);
     }
 
     @Override
     public Primary multiply(Primary rhs) throws EvaluatorException {
-        return this.getVariable().multiply(rhs);
+        return this.value.multiply(rhs);
     }
 
     @Override
     public Primary divide(Primary rhs) throws EvaluatorException {
-        return this.getVariable().divide(rhs);
+        return this.value.divide(rhs);
     }
 
     @Override
     public Primary modulo(Primary rhs) throws EvaluatorException {
-        return this.getVariable().modulo(rhs);
+        return this.value.modulo(rhs);
     }
 
     @Override
     public Primary exponent(Primary rhs) throws EvaluatorException {
-        return this.getVariable().exponent(rhs);
+        return this.value.exponent(rhs);
     }
 
     @Override
     public Primary or(Primary rhs) throws EvaluatorException {
-        return this.getVariable().or(rhs);
+        return this.value.or(rhs);
     }
 
     @Override
     public Primary and(Primary rhs) throws EvaluatorException {
-        return this.getVariable().and(rhs);
+        return this.value.and(rhs);
     }
 
     @Override
     public Primary lessThan(Primary rhs) throws EvaluatorException {
-        return this.getVariable().lessThan(rhs);
+        return this.value.lessThan(rhs);
     }
 
     @Override
     public Primary greaterThan(Primary rhs) throws EvaluatorException {
-        return this.getVariable().greaterThan(rhs);
+        return this.value.greaterThan(rhs);
     }
 
     @Override
     public Primary greaterThanEquals(Primary rhs) throws EvaluatorException {
-        return this.getVariable().greaterThanEquals(rhs);
+        return this.value.greaterThanEquals(rhs);
     }
 
     @Override
     public Primary equals(Primary rhs) throws EvaluatorException {
-        return this.getVariable().equals(rhs);
+        return this.value.equals(rhs);
     }
 
     @Override
     public Primary notEquals(Primary rhs) throws EvaluatorException {
-        return this.getVariable().notEquals(rhs);
+        return this.value.notEquals(rhs);
+    }
+
+    @Override
+    public Primary optional() throws EvaluatorException {
+        return new OptionalPrimary(this.value);
     }
 
     @Override
     public Primary assign(Primary rhs) throws EvaluatorException {
-        this.context.updateVariable(variableName, rhs);
+        this.value = rhs;
         return this;
-    }
-
-    private Primary getVariable() {
-        return this.context.getVariable(this.variableName);
     }
 }

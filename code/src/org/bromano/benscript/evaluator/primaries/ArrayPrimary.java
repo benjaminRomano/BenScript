@@ -5,7 +5,7 @@ import org.bromano.benscript.evaluator.EvaluatorException;
 
 import java.util.Iterator;
 
-public class ArrayPrimary extends BasePrimary<BenScriptArray> {
+public class ArrayPrimary extends BasePrimary {
 
     private BenScriptArray bsArray;
 
@@ -16,7 +16,6 @@ public class ArrayPrimary extends BasePrimary<BenScriptArray> {
         this.bsArray = bsArray;
     }
 
-    @Override
     public BenScriptArray getValue() throws EvaluatorException {
         return this.bsArray;
     }
@@ -65,12 +64,12 @@ public class ArrayPrimary extends BasePrimary<BenScriptArray> {
 
     @Override
     public Primary equals(Primary rhs) throws EvaluatorException {
-        return new BooleanPrimary(this.bsArray.values.equals(rhs.getValue()));
+        return new BooleanPrimary(this == rhs.getPrimary());
     }
 
     @Override
     public Primary optional() throws EvaluatorException {
-        return new OptionalPrimary<>(this);
+        return new OptionalPrimary(this);
     }
 
     @Override
