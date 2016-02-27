@@ -1,6 +1,5 @@
 package org.bromano.benscript.evaluator.primaries;
 
-import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public abstract class BasePrimary implements Primary {
         throw new EvaluatorException("Cannot cast " + type.name() + " to string");
     }
 
-    public BooleanPrimary castToBoolean() throws EvaluatorException, EvaluatorException {
+    public BooleanPrimary castToBoolean() throws EvaluatorException {
         throw new EvaluatorException("Cannot cast " + type.name() + " to boolean");
     }
 

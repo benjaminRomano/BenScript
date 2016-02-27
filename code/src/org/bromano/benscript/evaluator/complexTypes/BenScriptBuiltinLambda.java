@@ -1,5 +1,8 @@
 package org.bromano.benscript.evaluator.complexTypes;
 
+import org.bromano.benscript.evaluator.EvaluatorException;
+import org.bromano.benscript.evaluator.primaries.Primary;
+
 import java.util.List;
 
 public abstract class BenScriptBuiltinLambda implements BenScriptLambda {

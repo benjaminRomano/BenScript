@@ -1,7 +1,8 @@
 package org.bromano.benscript.evaluator.primaries;
 
-import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
+
+import java.util.List;
 
 public class IdentifierPrimary extends BasePrimary {
 
@@ -111,5 +112,20 @@ public class IdentifierPrimary extends BasePrimary {
     public Primary assign(Primary rhs) throws EvaluatorException {
         this.value = rhs;
         return this;
+    }
+
+    @Override
+    public Primary access(String prop) throws EvaluatorException {
+        return this.value.access(prop);
+    }
+
+    @Override
+    public Primary call(List<Primary> args) throws EvaluatorException {
+        return this.value.call(args);
+    }
+
+    @Override
+    public Primary index(Primary index) throws EvaluatorException {
+        return this.value.index(index);
     }
 }

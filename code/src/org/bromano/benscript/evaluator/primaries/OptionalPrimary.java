@@ -135,4 +135,9 @@ public class OptionalPrimary extends BasePrimary {
     public Primary not() throws EvaluatorException {
         return this.value.not();
     }
+
+    @Override
+    public Primary getPrimary() {
+        return this.value.getPrimary();
+    }
 }

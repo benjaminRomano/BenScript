@@ -1,9 +1,9 @@
 package org.bromano.benscript.evaluator;
 
 import org.bromano.benscript.evaluator.builtins.Console;
-import org.bromano.benscript.evaluator.primaries.NullPrimary;
-import org.bromano.benscript.evaluator.primaries.ObjectPrimary;
-import org.bromano.benscript.evaluator.primaries.Primary;
+import org.bromano.benscript.evaluator.complexTypes.BenScriptBasicObject;
+import org.bromano.benscript.evaluator.complexTypes.BenScriptObject;
+import org.bromano.benscript.evaluator.primaries.*;
 
 import java.util.HashMap;
 import java.util.Map;

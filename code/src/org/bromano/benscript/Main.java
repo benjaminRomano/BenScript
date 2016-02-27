@@ -36,7 +36,12 @@ public class Main {
 //                "printOut(null);"
 //        );
 
-        Lexer s = new BenScriptLexer("var b = 5; var a = b; a = 2; console.println(a);");
+        Lexer s = new BenScriptLexer("" +
+                "var b = 5; " +
+                "var a = b; " +
+                "a = 2; " +
+                "console.println(a); " +
+                "console.println([] + 5 + 6 + 7);");
 
         List<Lexeme> lexemeStream = s.getLexStream();
 

@@ -4,7 +4,6 @@ package org.bromano.benscript.evaluator.primaries;
 import org.bromano.benscript.evaluator.EvaluatorException;
 
 public class NullPrimary extends BasePrimary {
-    Object value;
 
     public NullPrimary() {
         this.type = PrimaryType.Null;

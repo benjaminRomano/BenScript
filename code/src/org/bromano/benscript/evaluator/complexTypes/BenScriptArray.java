@@ -21,6 +21,10 @@ public class BenScriptArray {
         return this.values.get(index);
     }
 
+    public void push(Primary value) {
+        this.values.add(value);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof BenScriptArray)) {

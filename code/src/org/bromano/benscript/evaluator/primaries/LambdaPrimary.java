@@ -2,14 +2,13 @@ package org.bromano.benscript.evaluator.primaries;
 
 import org.bromano.benscript.evaluator.complexTypes.BenScriptLambda;
 import org.bromano.benscript.evaluator.EvaluatorException;
-import org.bromano.benscript.nodes.statements.Statement;
 
 import java.util.Iterator;
 import java.util.List;
 
 public class LambdaPrimary extends BasePrimary {
 
-    BenScriptLambda bsLambda;
+    private BenScriptLambda bsLambda;
 
     public LambdaPrimary(BenScriptLambda bsLambda) {
 

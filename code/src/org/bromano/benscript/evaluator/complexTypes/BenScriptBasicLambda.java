@@ -59,7 +59,7 @@ public class BenScriptBasicLambda implements BenScriptLambda {
         if (result instanceof ReturnPrimary) {
             ReturnPrimary returnPrimary = (ReturnPrimary) result;
 
-            returnPrimary.getValue();
+            return returnPrimary.getValue();
         }
 
         return new NullPrimary();

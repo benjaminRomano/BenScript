@@ -9,7 +9,6 @@ public class ArrayPrimary extends BasePrimary {
 
     private BenScriptArray bsArray;
 
-
     public ArrayPrimary(BenScriptArray bsArray) {
 
         this.type = PrimaryType.Array;
@@ -45,6 +44,12 @@ public class ArrayPrimary extends BasePrimary {
         sb.append("]");
 
         return new StringPrimary(sb.toString());
+    }
+
+    @Override
+    public Primary add(Primary rhs) throws EvaluatorException {
+        this.bsArray.push(rhs.getPrimary());
+        return this;
     }
 
     @Override

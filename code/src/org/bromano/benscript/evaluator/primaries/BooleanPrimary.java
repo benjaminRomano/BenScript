@@ -4,7 +4,7 @@ import org.bromano.benscript.evaluator.EvaluatorException;
 
 public class BooleanPrimary extends BasePrimary {
 
-   private Boolean value;
+    private Boolean value;
 
     public BooleanPrimary(boolean value) {
         this.type = PrimaryType.Boolean;

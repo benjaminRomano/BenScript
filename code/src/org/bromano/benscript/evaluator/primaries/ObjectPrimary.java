@@ -1,6 +1,5 @@
 package org.bromano.benscript.evaluator.primaries;
 
-import org.bromano.benscript.evaluator.complexTypes.BenScriptBasicObject;
 import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.evaluator.complexTypes.BenScriptObject;
 
@@ -79,4 +78,5 @@ public class ObjectPrimary extends BasePrimary {
     public Primary not() throws EvaluatorException {
         return new BooleanPrimary(false);
     }
+
 }
