@@ -42,7 +42,11 @@ public class BenScriptInterpreter {
                 return;
             }
 
-            this.interpret(text);
+            try {
+                this.interpret(text);
+            } catch (Exception e) {
+                System.err.println("Error: " + e.getMessage());
+            }
         }
     }
 
@@ -53,6 +57,6 @@ public class BenScriptInterpreter {
 
         Program p = this.parser.parse();
 
-        System.out.println(p.evaluate(this.global));
+        System.out.println(p.evaluate(this.global).castToString().getValue());
     }
 }

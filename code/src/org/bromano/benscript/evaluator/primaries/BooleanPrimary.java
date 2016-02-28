@@ -22,7 +22,7 @@ public class BooleanPrimary extends BasePrimary {
 
     @Override
     public BooleanPrimary castToBoolean() throws EvaluatorException {
-        return super.castToBoolean();
+        return this;
     }
 
     @Override

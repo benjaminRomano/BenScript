@@ -20,11 +20,11 @@ public class IfStatement implements Statement {
         Environment newContext = new Environment(context);
 
 
-        Primary result;
+        Primary result = new NullPrimary();
 
         if (this.conditional.evaluate(context).castToBoolean().getValue()) {
             result = statement.evaluate(newContext);
-        } else {
+        } else if (elseStatement != null){
             result = elseStatement.evaluate(newContext);
         }
 

@@ -137,6 +137,11 @@ public class OptionalPrimary extends BasePrimary {
     }
 
     @Override
+    public Primary assign(Primary rhs) throws EvaluatorException {
+        return this.value.assign(rhs);
+    }
+
+    @Override
     public Primary getPrimary() {
         return this.value.getPrimary();
     }

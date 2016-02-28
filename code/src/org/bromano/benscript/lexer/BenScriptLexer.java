@@ -348,7 +348,7 @@ public class BenScriptLexer implements Lexer {
         while (this.pos < this.end) {
             char ch = this.text.charAt(this.pos);
 
-            if (ch == '0') {
+            if (sb.length() == 0 && ch == '0') {
                 this.pos++;
                 return "0";
             } else if (this.isDigit(ch)) {

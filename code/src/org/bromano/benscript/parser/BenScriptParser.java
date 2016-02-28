@@ -234,6 +234,8 @@ public class BenScriptParser implements Parser {
 
         IfStatement ifStatement = new IfStatement();
 
+        this.match(LexemeKind.IfKeyword);
+
         this.match(LexemeKind.OpenParen);
 
         ifStatement.conditional = this.parseExpression();
@@ -500,6 +502,7 @@ public class BenScriptParser implements Parser {
         map.put(LexemeKind.BarBar, new BinaryOperatorParslet(Precedence.LOGICALOR, true));
 
         map.put(LexemeKind.EqualsEquals, new BinaryOperatorParslet(Precedence.EQUALITY, true));
+        map.put(LexemeKind.ExclamationEquals, new BinaryOperatorParslet(Precedence.EQUALITY, true));
 
         map.put(LexemeKind.LessThan, new BinaryOperatorParslet(Precedence.RELATIONAL, false));
         map.put(LexemeKind.LessThanEquals, new BinaryOperatorParslet(Precedence.RELATIONAL, false));
