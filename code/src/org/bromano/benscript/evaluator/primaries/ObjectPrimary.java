@@ -42,6 +42,10 @@ public class ObjectPrimary extends BasePrimary {
         return new StringPrimary(sb.toString());
     }
 
+    public BenScriptObject getValue() {
+       return this.bsObject;
+    }
+
     @Override
     public Primary equals(Primary rhs) throws EvaluatorException {
         return new BooleanPrimary(this == rhs.getPrimary());

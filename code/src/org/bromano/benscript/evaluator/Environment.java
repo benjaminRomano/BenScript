@@ -1,6 +1,7 @@
 package org.bromano.benscript.evaluator;
 
 import org.bromano.benscript.evaluator.builtins.Console;
+import org.bromano.benscript.evaluator.builtins.LengthLambda;
 import org.bromano.benscript.evaluator.complexTypes.BenScriptBasicObject;
 import org.bromano.benscript.evaluator.complexTypes.BenScriptObject;
 import org.bromano.benscript.evaluator.primaries.*;
@@ -21,6 +22,7 @@ public class Environment {
 
         Environment globalContext = new Environment();
         globalContext.variables.put("console", new ObjectPrimary(new Console()));
+        globalContext.variables.put("length", new LambdaPrimary(new LengthLambda()));
 
         return globalContext;
     }

@@ -44,9 +44,9 @@ public class BenScriptBasicLambda implements BenScriptLambda {
         Environment newContext = new Environment(context);
 
         if (this.paramNames.size() < args.size()) {
-            throw new EvaluatorException("Too many parameters supplied.");
+            throw new EvaluatorException("Too many arguments supplied.");
         } else if (this.paramNames.size() > args.size()){
-            throw new EvaluatorException("Not enough parameters supplied.");
+            throw new EvaluatorException("Not enough arguments supplied.");
         }
 
         for (int i = 0; i < this.paramNames.size(); i++) {

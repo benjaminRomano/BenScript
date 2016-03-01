@@ -1,0 +1,96 @@
+//Color is either "R" or "B"
+func Node(key, val, parent, left, right, color) {
+
+    return {
+        key: key,
+        val: val,
+        parent: parent,
+        left: left,
+        right: right,
+        color: color
+    };
+}
+
+func Dictionary() {
+
+    var root = null;
+
+    // TODO: Handle case of duplicates
+    func insert(key, val) {
+        //Force cast to string if possible otherwise errors out
+        key = "" + key;
+        var node = Node(key, val, null, null, null, "R");
+        if (!root) {
+            root = node;
+        } else {
+            insertRec(root, node);
+        }
+        //insert fix up
+        insertFixUp(node);
+    }
+
+    func insertRec(root, node) {
+        if (root.key < node.key) {
+            if (!root.left) {
+                root.left = node;
+                node.parent = root;
+                return;
+            }
+            insertRec(root.left, node);
+            return;
+        }
+
+        if (!root.right) {
+            root.right = node;
+            node.parent = root;
+            return;
+        }
+
+        insertRec(root.right, node);
+    }
+
+    func insertFixUp(node) {
+        while (true) {
+            if (node == root || node.parent.color == "B") {
+                break;
+            } else if (uncle(node).color == "R") {
+                node.parent.color = "B";
+                uncle(node).color = "B";
+                node = node.parent.parent;
+                continue;
+            }
+
+            // Is not linear
+            if ((node.parent.left == node && node.parent.parent.left == node.parent)
+                || (node.parent.right == node && node.parent.parent.right = node parent)) {
+
+                // Rotate x to parent
+                // x = old parent
+                // parent = old x
+            }
+
+            node.parent.color = "B";
+            node.parent.parent.color = "R";
+            //Rotate parent to grandparent
+        }
+
+        root.color = "B";
+    }
+
+    func rotate(n1, n2) {
+    }
+
+    func uncle(node) {
+        if (node.parent.left == node) {
+            return node.parent.parent.right;
+        }
+        return node.parent.parent.left;
+    }
+
+    return {
+        //insert: insert,
+        //remove: remove,
+        //get: get,
+        //contains: contains
+    }
+}

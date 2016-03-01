@@ -46,6 +46,42 @@ public class StringPrimary extends BasePrimary {
     }
 
     @Override
+    public Primary lessThan(Primary rhs) throws EvaluatorException {
+        String s = rhs.castToString().getValue();
+
+        boolean result = this.compare(this.value, s) == -1;
+
+        return new BooleanPrimary(result);
+    }
+
+    @Override
+    public Primary greaterThan(Primary rhs) throws EvaluatorException {
+        String s = rhs.castToString().getValue();
+
+        boolean result = this.compare(this.value, s) == 1;
+
+        return new BooleanPrimary(result);
+    }
+
+    @Override
+    public Primary greaterThanEquals(Primary rhs) throws EvaluatorException {
+        String s = rhs.castToString().getValue();
+
+        boolean result = this.compare(this.value, s) >= 0;
+
+        return new BooleanPrimary(result);
+    }
+
+    @Override
+    public Primary lessThanEquals(Primary rhs) throws EvaluatorException {
+        String s = rhs.castToString().getValue();
+
+        boolean result = this.compare(this.value, s) <= 0;
+
+        return new BooleanPrimary(result);
+    }
+
+    @Override
     public Primary optional() throws EvaluatorException {
         return new OptionalPrimary(this);
     }
@@ -65,5 +101,9 @@ public class StringPrimary extends BasePrimary {
         }
 
         return new StringPrimary(s.toString());
+    }
+
+    private int compare(String s1, String s2) {
+        return s1.compareTo(s2);
     }
 }
