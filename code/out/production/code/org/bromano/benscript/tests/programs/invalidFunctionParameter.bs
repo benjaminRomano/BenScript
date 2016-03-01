@@ -1,1 +1,0 @@
-func a(5) { console.println(5); }

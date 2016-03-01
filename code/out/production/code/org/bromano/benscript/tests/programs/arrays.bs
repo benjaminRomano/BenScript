@@ -1,6 +1,0 @@
-var a = [];
-a + 5; //This operation has side-effects to keep the O(1) run-time
-a = a + 6 + 7;
-console.println(a);
-console.println(a[0]);
-
