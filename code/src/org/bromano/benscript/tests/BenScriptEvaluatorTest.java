@@ -59,10 +59,21 @@ public class BenScriptEvaluatorTest {
     public void testArrays() throws IOException, URISyntaxException, EvaluatorException, ParserException, LexerException {
         String code = this.getFileContent("arrays.bs");
 
-        List<Primary> values = new ArrayList<>();
-        values.add(new IntegerPrimary(5));
-        values.add(new IntegerPrimary(6));
-        assertEvaluatorResults(new EvaluatorResult("", new ArrayPrimary(new BenScriptArray(values))), this.evaluateCode(code));
+        assertEvaluatorResults(new EvaluatorResult("[5, 6, 7]\n5\n", new NullPrimary()), this.evaluateCode(code));
+    }
+
+    @Test
+    public void testRecursion() throws IOException, URISyntaxException, EvaluatorException, ParserException, LexerException {
+        String code = this.getFileContent("recursion.bs");
+
+        assertEvaluatorResults(new EvaluatorResult("1\n1\n2\n3\n", new NullPrimary()), this.evaluateCode(code));
+    }
+
+    @Test
+    public void testIteration() throws IOException, URISyntaxException, EvaluatorException, ParserException, LexerException {
+        String code = this.getFileContent("iteration.bs");
+
+        assertEvaluatorResults(new EvaluatorResult("0\n1\n2\n3\n4\n1\n2\n3\n4\n", new NullPrimary()), this.evaluateCode(code));
     }
 
     @Test
