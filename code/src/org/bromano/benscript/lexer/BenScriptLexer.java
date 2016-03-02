@@ -179,6 +179,8 @@ public class BenScriptLexer implements Lexer {
                             this.pos++;
                         }
 
+                        this.lineNum++;
+                        this.lineStart = this.pos;
                         continue;
                     } else if (isAMatch(this.pos, "*")) {
                         //Block comments
@@ -189,6 +191,14 @@ public class BenScriptLexer implements Lexer {
                                 this.pos += 2;
                                 break;
                             }
+
+                            if (isAMatch(this.pos, "\n")) {
+                                this.pos++;
+                                this.lineNum++;
+                                this.lineStart = this.pos;
+                                continue;
+                            }
+
                             this.pos++;
                         }
 

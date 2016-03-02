@@ -110,7 +110,7 @@ public class IdentifierPrimary extends BasePrimary {
 
     @Override
     public Primary assign(Primary rhs) throws EvaluatorException {
-        this.value = rhs;
+        this.value = rhs.getPrimary();
         return this;
     }
 
@@ -127,5 +127,15 @@ public class IdentifierPrimary extends BasePrimary {
     @Override
     public Primary index(Primary index) throws EvaluatorException {
         return this.value.index(index);
+    }
+
+    @Override
+    public Primary minus() throws EvaluatorException {
+        return this.value.minus();
+    }
+
+    @Override
+    public Primary not() throws EvaluatorException {
+        return this.value.not();
     }
 }

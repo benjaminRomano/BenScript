@@ -30,7 +30,15 @@ public class ObjectPrimary extends BasePrimary {
 
         while (entries.hasNext()) {
             Map.Entry<String, Primary> entry = entries.next();
-            sb.append(entry.getKey() + ": " + entry.getValue().castToString().getValue());
+
+            Primary p = entry.getValue();
+
+            // Solves the problem of infinite recursion and large objects
+            if (p instanceof ObjectPrimary) {
+                sb.append(entry.getKey() + ": { ... }");
+            } else {
+                sb.append(entry.getKey() + ": " + entry.getValue().castToString().getValue());
+            }
 
             if (entries.hasNext()) {
                 sb.append(", ");
@@ -58,8 +66,6 @@ public class ObjectPrimary extends BasePrimary {
 
     @Override
     public Primary access(String prop) throws EvaluatorException {
-        List<String> props = new ArrayList<>();
-
         return new ObjectIdentifierPrimary(this.bsObject, prop);
     }
 
@@ -82,5 +88,4 @@ public class ObjectPrimary extends BasePrimary {
     public Primary not() throws EvaluatorException {
         return new BooleanPrimary(false);
     }
-
 }

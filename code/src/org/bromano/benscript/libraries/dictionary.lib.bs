@@ -23,30 +23,61 @@ func Dictionary() {
         if (!root) {
             root = node;
         } else {
-            insertRec(root, node);
+            node = insertRec(root, node);
         }
         //insert fix up
         insertFixUp(node);
     }
 
-    func insertRec(root, node) {
-        if (root.key < node.key) {
-            if (!root.left) {
-                root.left = node;
-                node.parent = root;
-                return;
+    func contains(key) {
+        return !!getRec(root, key);
+    }
+
+    func get(key) {
+        var node = getRec(root, key);
+
+        if (!node) {
+            return null;
+        }
+
+        return node.val;
+    }
+
+    func getRec(node, key) {
+        if (!node) {
+            return null;
+        } else if (node.key == key) {
+            return node;
+        } else if (node.key < key) {
+            return getRec(node.left, key);
+        }
+
+        return getRec(node.right, key);
+    }
+
+    func insertRec(r, node) {
+        if (r.key == node.key) {
+            r.val = node.val;
+            return r;
+        }
+
+        if (r.key < node.key) {
+            if (!r.left) {
+                r.left = node;
+                node.parent = r;
+                return node;
             }
-            insertRec(root.left, node);
-            return;
+            insertRec(r.left, node);
+            return node;
         }
 
         if (!root.right) {
             root.right = node;
             node.parent = root;
-            return;
+            return node;
         }
 
-        insertRec(root.right, node);
+        return insertRec(root.right, node);
     }
 
     func insertFixUp(node) {
@@ -62,22 +93,108 @@ func Dictionary() {
 
             // Is not linear
             if ((node.parent.left == node && node.parent.parent.left == node.parent)
-                || (node.parent.right == node && node.parent.parent.right = node parent)) {
+                || (node.parent.right == node && node.parent.parent.right == node.parent)) {
 
-                // Rotate x to parent
-                // x = old parent
-                // parent = old x
+                rotate(node, node.parent);
             }
 
             node.parent.color = "B";
             node.parent.parent.color = "R";
-            //Rotate parent to grandparent
+            rotate(node.parent, node.parent.parent);
         }
 
         root.color = "B";
     }
 
+    func remove(key) {
+        var node = bubbleDown(root, key);
+        removeFixUp(node);
+
+        if (node.parent == null) {
+            root = null;
+        } else if (node.parent.left == node) {
+            node.parent.left = null;
+        } else {
+            node.parent.right = null;
+        }
+
+        return node.val;
+    }
+
+    func bubbleDown(node, key) {
+        //if (node == null) {
+            //Throw error. Value not found
+        //}
+
+        if (node.key < key) {
+            return bubbleDown(node.left, key);
+        } else if (node.key > key) {
+            return bubbleDown(node.right, key);
+        }
+
+        if (node.right != null) {
+            swap(node, node.right);
+            return bubbleDown(node.right, key);
+        } else if (node.left != null) {
+            swap(node, node.left);
+            return bubbleDown(node.right, key);
+        }
+        //Otherwise finished bubbling down key
+        return node;
+    }
+
+    func swap(n1, n2) {
+        var tempVal = n1.val;
+        var tempKey = n1.key;
+
+        n1.val = n2.val;
+        n1.key = n2.key;
+
+        n2.val = tempVal;
+        n2.key = tempKey;
+    }
+
+    func removeFixUp(node) {
+        while (true) {
+            if (node == root || node.color == "R") {
+                break;
+            } else if (sibling(node) && sibling(node).color == "R") {
+                node.parent.color = "R";
+                sibling(node).color = "B";
+                rotate(sibling(node), node.parent);
+                continue;
+            } else if (nephew(node) && nephew(node).color == "R") {
+                sibling(node).color = node.parent.color;
+                node.parent.color = "B";
+                rotate(sibling(node), node.parent);
+                node = root;
+                continue;
+            } else if (niece(node) && niece(node).color == "R") {
+                niece(node).color = "B";
+                sibling(node).color = "R";
+                rotate(niece(node), sibling(node));
+                continue;
+            }
+
+            sibling(node).color = "R";
+            node = node.parent;
+        }
+
+        node.color = "B";
+    }
+
     func rotate(n1, n2) {
+        n1.parent = n2.parent;
+        n2.parent = n1;
+
+        if (n2.left == n1) {
+            n2.left = n1.right;
+            n1.right = n2;
+            return;
+        }
+
+        n2.right = n1.left;
+        n1.left = n2;
     }
 
     func uncle(node) {
@@ -87,10 +204,42 @@ func Dictionary() {
         return node.parent.parent.left;
     }
 
-    return {
-        //insert: insert,
-        //remove: remove,
-        //get: get,
-        //contains: contains
+    func sibling(node) {
+        if (node.parent.left == node) {
+            return node.parent.right;
+        }
+
+        return node.parent.left;
     }
+
+    func niece(node) {
+        var s = sibling(node);
+
+        if (!s) {
+            return null;
+        } else if (node.parent.left == node) {
+            return s.left;
+        }
+
+        return s.right;
+    }
+
+    func nephew(node) {
+        var s = sibling(node);
+
+        if (!s) {
+            return null;
+        } else if (node.parent.left == node) {
+            return s.right;
+        }
+
+        return s.left;
+    }
+
+    return {
+        insert: insert,
+        remove: remove,
+        get: get,
+        contains: contains
+    };
 }

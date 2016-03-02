@@ -15,7 +15,7 @@ public class VariableDeclarationStatement implements Statement {
     @Override
     public Primary evaluate(Environment context) throws EvaluatorException {
 
-        context.addPrimary(name.value, new IdentifierPrimary(expression.evaluate(context)));
+        context.addPrimary(name.value, new IdentifierPrimary(expression.evaluate(context).getPrimary()));
 
         return new NullPrimary();
     }

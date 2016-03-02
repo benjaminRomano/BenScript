@@ -94,7 +94,7 @@ public class BenScriptParser implements Parser {
 
         Lexeme lexeme = this.lexemes.get(this.pos);
         if (this.lexemes.get(this.pos).kind != kind) {
-            throw new ParserException("Expected a " + kind.name() + ", but received a " + lexeme.kind.name() );
+            throw new ParserException("Expected a " + kind.name() + ", but received a " + lexeme.kind.name() + " at " + lexeme.linePos);
         }
 
         this.pos++;
@@ -303,7 +303,10 @@ public class BenScriptParser implements Parser {
 
         this.match(LexemeKind.ReturnKeyword);
 
-        returnStatement.expression = this.parseExpression();
+
+        if (!this.isAMatch(LexemeKind.Semicolon)) {
+            returnStatement.expression = this.parseExpression();
+        }
 
         this.match(LexemeKind.Semicolon);
 

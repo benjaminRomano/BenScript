@@ -1,6 +1,5 @@
 package org.bromano.benscript.evaluator.primaries;
 
-import org.bromano.benscript.evaluator.complexTypes.BenScriptBasicObject;
 import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.evaluator.complexTypes.BenScriptObject;
 
@@ -140,7 +139,7 @@ public class ObjectIdentifierPrimary extends BasePrimary {
 
     @Override
     public Primary assign(Primary rhs) throws EvaluatorException {
-        this.base.setValue(this.prop, rhs);
+        this.base.setValue(this.prop, rhs.getPrimary());
         return this.extractProperty();
     }
 

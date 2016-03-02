@@ -23,7 +23,7 @@ public class ObjectExpression implements Expression {
 
         while (iterator.hasNext()) {
             Map.Entry<Lexeme, Expression> keyValue = iterator.next();
-            primaryKeyValues.put(keyValue.getKey().value, keyValue.getValue().evaluate(context));
+            primaryKeyValues.put(keyValue.getKey().value, keyValue.getValue().evaluate(context).getPrimary());
         }
 
         return new ObjectPrimary(new BenScriptBasicObject(primaryKeyValues));
