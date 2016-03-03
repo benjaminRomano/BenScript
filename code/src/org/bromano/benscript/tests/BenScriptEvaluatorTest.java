@@ -1,10 +1,8 @@
 package org.bromano.benscript.tests;
 
+import org.bromano.benscript.Main;
 import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
-import org.bromano.benscript.evaluator.complexTypes.BenScriptArray;
-import org.bromano.benscript.evaluator.primaries.ArrayPrimary;
-import org.bromano.benscript.evaluator.primaries.IntegerPrimary;
 import org.bromano.benscript.evaluator.primaries.NullPrimary;
 import org.bromano.benscript.evaluator.primaries.Primary;
 import org.bromano.benscript.lexer.BenScriptLexer;
@@ -81,6 +79,24 @@ public class BenScriptEvaluatorTest {
         assertEvaluatorResults(new EvaluatorResult("1\n2\n", new NullPrimary()), this.evaluateCode(code));
     }
 
+    @Test
+    public void testDictionary() throws IOException, URISyntaxException, EvaluatorException, ParserException, LexerException {
+        String code = this.loadLibraries();
+        code += this.getFileContent("dictionary.bs");
+
+        String output = "true\n";
+
+        for (int i = 1; i <= 13; i++) {
+            output += i + "\n";
+        }
+
+        for (int i = 1; i <= 13; i++) {
+            output += i + "\n";
+        }
+
+        assertEvaluatorResults(new EvaluatorResult(output, new NullPrimary()), this.evaluateCode(code));
+    }
+
     private void assertError(String code, Class<? extends Throwable> type, String msg) throws EvaluatorException, ParserException, LexerException {
 
         this.exception.expect(type);
@@ -97,6 +113,14 @@ public class BenScriptEvaluatorTest {
 
     public void assertEvaluatorResults(EvaluatorResult expected, EvaluatorResult actual) {
         assertEquals(true, expected.equals(actual));
+    }
+
+    public String loadLibraries() throws URISyntaxException, IOException {
+        Path path = Paths.get(Main.class.getResource("libraries/dictionary.lib.bs").toURI());
+        String libraries = Files.readAllLines(path).stream().reduce("", (s, s2) -> s + "\n" + s2);
+        libraries = libraries + "\n";
+
+        return libraries;
     }
 
     private EvaluatorResult evaluateCode(String code) throws LexerException, ParserException, EvaluatorException {

@@ -84,6 +84,11 @@ public class IdentifierPrimary extends BasePrimary {
     }
 
     @Override
+    public Primary lessThanEquals(Primary rhs) throws EvaluatorException {
+        return this.value.lessThanEquals(rhs);
+    }
+
+    @Override
     public Primary greaterThan(Primary rhs) throws EvaluatorException {
         return this.value.greaterThan(rhs);
     }

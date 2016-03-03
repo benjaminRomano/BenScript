@@ -49,7 +49,7 @@ public class StringPrimary extends BasePrimary {
     public Primary lessThan(Primary rhs) throws EvaluatorException {
         String s = rhs.castToString().getValue();
 
-        boolean result = this.compare(this.value, s) == -1;
+        boolean result = this.compare(this.value, s) <= -1;
 
         return new BooleanPrimary(result);
     }
@@ -58,7 +58,7 @@ public class StringPrimary extends BasePrimary {
     public Primary greaterThan(Primary rhs) throws EvaluatorException {
         String s = rhs.castToString().getValue();
 
-        boolean result = this.compare(this.value, s) == 1;
+        boolean result = this.compare(this.value, s) >= 1;
 
         return new BooleanPrimary(result);
     }

@@ -21,18 +21,7 @@ public class Main {
 
     public static void main(String[] args) throws LexerException, ParserException, EmitterException, EvaluatorException, URISyntaxException, IOException {
 
-        String code = "" +
-                "var a = Dictionary();" +
-                "a.insert(5, 5);" +
-                "a.insert('hello', {});" +
-                "a.insert(5, 6);" +
-                "console.println(a.contains(5));" + // true
-                "console.println(a.get(5));" + // 6
-                "console.println(a.get('hello'));" + // { }
-                "a.remove(5);" +
-                "console.println(a.contains(5));" + // false
-                "console.println(a.get('hello'));" + // { }
-                "console.println(a.get(5));"; // null
+        String code = getFileContent("tests/programs/dictionary.bs");
 
         code = loadLibraries() + code;
 
@@ -40,6 +29,13 @@ public class Main {
         Program program = new BenScriptParser(lexemes).parse();
         program.evaluate(Environment.createGlobalEnvironment()).castToString().getValue();
 
+    }
+
+    private static String getFileContent(String fileName) throws URISyntaxException, IOException {
+
+        Path path = Paths.get(Main.class.getResource(fileName).toURI());
+
+        return Files.readAllLines(path).stream().reduce("", (s, s2) -> s + "\n" + s2);
     }
 
     public static String loadLibraries() throws URISyntaxException, IOException {

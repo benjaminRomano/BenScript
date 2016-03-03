@@ -76,7 +76,7 @@ public class ObjectPrimary extends BasePrimary {
 
     @Override
     public Primary and(Primary rhs) throws EvaluatorException {
-        return this.castToBoolean().or(rhs.castToBoolean());
+        return this.castToBoolean().and(rhs.castToBoolean());
     }
 
     @Override

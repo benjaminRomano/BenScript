@@ -1,0 +1,48 @@
+var a = Dictionary();
+
+a.insert(37, 1);
+a.insert(16, 2);
+a.insert(60, 3);
+a.insert(7, 4);
+a.insert(24, 5);
+a.insert(46, 6);
+a.insert(42, 7);
+a.insert(75, 8);
+a.insert(88, 9);
+a.insert(0, 10);
+a.insert(43, 11);
+a.insert(44, 12);
+a.insert(99, 13);
+
+//Test contains
+console.println(a.contains(0));
+
+// Verify insertions worked
+console.println(a.get(37));
+console.println(a.get(16));
+console.println(a.get(60));
+console.println(a.get(7));
+console.println(a.get(24));
+console.println(a.get(46));
+console.println(a.get(42));
+console.println(a.get(75));
+console.println(a.get(88));
+console.println(a.get(0));
+console.println(a.get(43));
+console.println(a.get(44));
+console.println(a.get(99));
+
+//Verify deletions worked
+console.println(a.remove(37));
+console.println(a.remove(16));
+console.println(a.remove(60));
+console.println(a.remove(7));
+console.println(a.remove(24));
+console.println(a.remove(46));
+console.println(a.remove(42));
+console.println(a.remove(75));
+console.println(a.remove(88));
+console.println(a.remove(0));
+console.println(a.remove(43));
+console.println(a.remove(44));
+console.println(a.remove(99));
