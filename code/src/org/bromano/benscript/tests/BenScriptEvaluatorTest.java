@@ -1,6 +1,6 @@
 package org.bromano.benscript.tests;
 
-import org.bromano.benscript.Main;
+import org.bromano.benscript.BenScriptLibraryLoader;
 import org.bromano.benscript.evaluator.Environment;
 import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.evaluator.primaries.NullPrimary;
@@ -80,8 +80,8 @@ public class BenScriptEvaluatorTest {
     }
 
     @Test
-    public void testDictionary() throws IOException, URISyntaxException, EvaluatorException, ParserException, LexerException {
-        String code = this.loadLibraries();
+    public void testDictionary() throws Exception {
+        String code = BenScriptLibraryLoader.loadLibraries();
         code += this.getFileContent("dictionary.bs");
 
         String output = "true\n";
@@ -113,14 +113,6 @@ public class BenScriptEvaluatorTest {
 
     public void assertEvaluatorResults(EvaluatorResult expected, EvaluatorResult actual) {
         assertEquals(true, expected.equals(actual));
-    }
-
-    public String loadLibraries() throws URISyntaxException, IOException {
-        Path path = Paths.get(Main.class.getResource("libraries/dictionary.lib.bs").toURI());
-        String libraries = Files.readAllLines(path).stream().reduce("", (s, s2) -> s + "\n" + s2);
-        libraries = libraries + "\n";
-
-        return libraries;
     }
 
     private EvaluatorResult evaluateCode(String code) throws LexerException, ParserException, EvaluatorException {

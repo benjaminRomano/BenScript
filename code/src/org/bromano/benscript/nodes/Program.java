@@ -7,9 +7,6 @@ import org.bromano.benscript.evaluator.primaries.Primary;
 import org.bromano.benscript.evaluator.primaries.special.BreakPrimary;
 import org.bromano.benscript.evaluator.primaries.special.ContinuePrimary;
 import org.bromano.benscript.evaluator.primaries.special.ReturnPrimary;
-import org.bromano.benscript.nodes.statements.BreakStatement;
-import org.bromano.benscript.nodes.statements.ContinueStatement;
-import org.bromano.benscript.nodes.statements.ReturnStatement;
 import org.bromano.benscript.nodes.statements.Statement;
 
 import java.util.List;

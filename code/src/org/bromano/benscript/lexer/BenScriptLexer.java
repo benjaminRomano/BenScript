@@ -448,23 +448,36 @@ public class BenScriptLexer implements Lexer {
             throw new LexerException("Expected backslash in escape sequence");
         }
 
-        sb.append(this.text.charAt(this.pos));
+        String escapeSequence = "";
+
+        escapeSequence += this.text.charAt(this.pos);
         this.pos++;
-
-        if (isAMatch(this.pos, "'") && !usesDoubleQuotes) {
-            throw new LexerException("Cannot use escaped single quote within single quotes");
-        }
-
-        if (isAMatch(this.pos, "\"") && usesDoubleQuotes) {
-            throw new LexerException("Cannot use escaped double quote within double quotes");
-        }
 
         if (!isAMatch(this.pos, new char[] { '\'', '"', '\\', 't', 'n' })) {
             throw new LexerException(error("Unexpected char " + this.text.charAt(this.pos) + " found in escape sequence"));
         }
 
-        sb.append(this.text.charAt(this.pos));
+
+        escapeSequence += this.text.charAt(this.pos);
         this.pos++;
+
+        switch (escapeSequence) {
+            case "\\":
+                sb.append('\\');
+                break;
+            case "\\\"":
+                sb.append('\"');
+                break;
+            case "\\\\":
+                sb.append('\\');
+                break;
+            case "\\t":
+                sb.append('\t');
+                break;
+            case "\\n":
+                sb.append('\n');
+                break;
+        }
 
         return sb.toString();
     }

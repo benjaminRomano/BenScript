@@ -5,7 +5,7 @@ import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.lexer.LexerException;
 import org.bromano.benscript.parser.ParserException;
 
-public class Main {
+public class Interpreter {
 
     public static void main(String[] args) throws LexerException, ParserException, EmitterException, EvaluatorException {
 

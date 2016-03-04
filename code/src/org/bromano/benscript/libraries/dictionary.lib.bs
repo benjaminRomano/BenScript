@@ -1,16 +1,3 @@
-//Color is either "R" or "B"
-func Node(key, val, parent, left, right, color) {
-
-    return {
-        key: key,
-        val: val,
-        parent: parent,
-        left: left,
-        right: right,
-        color: color
-    };
-}
-
 func Dictionary() {
 
     var root = null;
@@ -309,6 +296,18 @@ func Dictionary() {
         console.println(spaces + node);
         printTreeRec(node.left, spaces + "\t");
         printTreeRec(node.right, spaces + "\t");
+    }
+
+    func Node(key, val, parent, left, right, color) {
+
+        return {
+            key: key,
+            val: val,
+            parent: parent,
+            left: left,
+            right: right,
+            color: color
+        };
     }
 
     return {

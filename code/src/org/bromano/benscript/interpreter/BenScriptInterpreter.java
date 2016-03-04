@@ -28,7 +28,7 @@ public class BenScriptInterpreter {
         Scanner scanner = new Scanner(System.in);
         String text;
 
-        System.out.println("BenScript BenScriptInterpreter");
+        System.out.println("BenScript Interpreter");
         System.out.println("---------------------");
         System.out.println("Enter quit or exit to stop");
 

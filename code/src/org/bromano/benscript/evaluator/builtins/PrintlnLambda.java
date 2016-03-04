@@ -10,7 +10,6 @@ import java.util.List;
 public class PrintlnLambda extends BenScriptBuiltinLambda {
 
     public PrintlnLambda() {
-
         this.paramNames = null;
     }
 
