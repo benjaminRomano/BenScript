@@ -2,9 +2,10 @@ package org.bromano.benscript.evaluator.builtins;
 
 import org.bromano.benscript.evaluator.EvaluatorException;
 import org.bromano.benscript.evaluator.complexTypes.BenScriptBuiltinLambda;
-import org.bromano.benscript.evaluator.primaries.*;
+import org.bromano.benscript.evaluator.primaries.ArrayPrimary;
+import org.bromano.benscript.evaluator.primaries.IntegerPrimary;
+import org.bromano.benscript.evaluator.primaries.Primary;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 public class LengthLambda extends BenScriptBuiltinLambda {
@@ -23,7 +24,7 @@ public class LengthLambda extends BenScriptBuiltinLambda {
             throw new EvaluatorException("Not enough arguments supplied.");
         }
 
-        Primary p = args.get(0);
+        Primary p = args.get(0).getPrimary();
 
         if (p instanceof ArrayPrimary) {
             return new IntegerPrimary(((ArrayPrimary) p).getValue().values.size());

@@ -1,0 +1,224 @@
+var INVERTER_DELAY = 2;
+var AND_GATE_DELAY = 3;
+var OR_GATE_DELAY = 5;
+
+func Wire() {
+    var value = 0;
+    var actions = [];
+
+    func getSignal() {
+        return value;
+    }
+
+    func setSignal(newValue) {
+        if (value == newValue) {
+            return;
+        }
+
+        value = newValue;
+        for (var i = 0; i < length(actions); i += 1) {
+            actions[i]();
+        }
+    }
+
+    func addAction(action) {
+        actions = actions + action;
+        action();
+    }
+
+    return {
+        getSignal: getSignal,
+        setSignal: setSignal,
+        addAction: addAction
+    };
+}
+
+func Queue() {
+    var head = null;
+    var tail = null;
+
+    func Node(val, next) {
+        return {
+            val: val,
+            next: next
+        };
+    }
+
+    func enqueue(action) {
+        if (!head) {
+            head = Node(action, null);
+            tail = head;
+            return;
+        }
+
+        tail.next = Node(action,null);
+        tail = tail.next;
+    }
+
+    func dequeue() {
+        var node = head;
+        head = head.next;
+
+        if (!head) {
+            tail = null;
+        }
+
+        return node.val;
+    }
+
+    func isEmpty() {
+        return !head;
+    }
+
+    return {
+        isEmpty: isEmpty,
+        enqueue: enqueue,
+        dequeue: dequeue
+    };
+}
+
+func PriorityQueue() {
+    var head = null;
+
+    func Node(priority, queue, next) {
+        return {
+            priority: priority,
+            queue: queue,
+            next: next
+        };
+    }
+
+    func enqueue(priority, action) {
+        if (!head) {
+            head = Node(priority, Queue(), null);
+            head.queue.enqueue(action);
+        }
+
+        var node = head;
+        var prev = null;
+
+        while (node) {
+            if (priority == node.priority) {
+                node.queue.enqueue(action);
+                return;
+            } else if (priority < node.priority) {
+                var newNode = Node(priority, Queue(), null);
+
+                if (!prev) {
+                    head = newNode;
+                    newNode.next = node;
+                } else {
+                    prev.next = newNode;
+                    newNode.next = node;
+                }
+
+                newNode.queue.enqueue(action);
+                return;
+            }
+
+            prev = node;
+            node = node.next;
+        }
+
+        prev.next = Node(priority, Queue(), null);
+        prev.next.queue.enqueue(action);
+    }
+
+    func dequeue() {
+        var action = head.queue.dequeue();
+
+        if (head.queue.isEmpty()) {
+            head = head.next;
+        }
+
+        return action;
+    }
+
+    func isEmpty() {
+        return !head;
+    }
+
+    func currentPriority() {
+        if (!head) {
+            return 0;
+        }
+
+        return head.priority;
+    }
+
+    return {
+        currentPriority: currentPriority,
+        isEmpty: isEmpty,
+        enqueue: enqueue,
+        dequeue: dequeue
+    };
+}
+
+func logicalNot(val) {
+    if (val == 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
+func logicalAnd(val1, val2) {
+    if (val1 == 1 && val2 == 1) {
+        return 1;
+    }
+
+    return 0;
+}
+
+
+func Inverter(input, output) {
+    var inverterDelay = INVERTER_DELAY;
+
+
+    func invertAction() {
+        afterDelay(inverterDelay, () => {
+            var newValue = logicalNot(input.getSignal());
+            output.setSignal(newValue);
+        });
+    }
+
+    input.addAction(invertAction);
+}
+
+var agenda = PriorityQueue();
+
+func afterDelay(delay, action) {
+    agenda.enqueue(delay + agenda.currentPriority(), action);
+}
+
+func propagate() {
+    if (agenda.isEmpty()) {
+        return;
+
+    }
+    var item = agenda.dequeue();
+    item();
+    propagate();
+}
+
+func probe(name, wire) {
+    wire.addAction(() => {
+       console.println(name + " at " + agenda.currentPriority() + " New Value: " + wire.getSignal());
+  });
+}
+
+
+// Create circuit here:
+
+var input = Wire();
+var output = Wire();
+var output2 = Wire();
+
+probe("input", input);
+probe("output", output);
+probe("output2", output2);
+
+Inverter(input, output);
+Inverter(output, output2);
+
+propagate();

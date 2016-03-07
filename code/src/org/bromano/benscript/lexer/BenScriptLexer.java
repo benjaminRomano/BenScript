@@ -27,7 +27,7 @@ public class BenScriptLexer implements Lexer {
     public void setText(String text) {
         this.text = text;
         this.pos = 0;
-        this.lineNum = 0;
+        this.lineNum = 1;
         this.lineStart = 0;
         this.end = this.text.length();
     }
