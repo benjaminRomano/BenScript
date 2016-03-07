@@ -170,8 +170,15 @@ func logicalAnd(val1, val2) {
     return 0;
 }
 
+func logicalOr(val1, val2) {
+    if (val1 == 1 || val2 == 1) {
+        return 1;
+    }
 
-func Inverter(input, output) {
+    return 0;
+}
+
+func inverter(input, output) {
     var inverterDelay = INVERTER_DELAY;
 
 
@@ -183,6 +190,54 @@ func Inverter(input, output) {
     }
 
     input.addAction(invertAction);
+}
+
+func andGate(input1, input2, output) {
+    var andDelay = AND_GATE_DELAY;
+
+    func andAction() {
+        afterDelay(andDelay, () => {
+            var newValue = logicalAnd(input1.getSignal(), input2.getSignal());
+            output.setSignal(newValue);
+        });
+    }
+
+    input1.addAction(andAction);
+    input2.addAction(andAction);
+}
+
+func orGate(input1, input2, output) {
+    var orDelay = OR_GATE_DELAY;
+
+    func orAction() {
+        afterDelay(orDelay, () => {
+            var newValue = logicalOr(input1.getSignal(), input2.getSignal());
+            output.setSignal(newValue);
+        });
+    }
+
+    input1.addAction(orAction);
+    input2.addAction(orAction);
+}
+
+func halfAdder(a, b, sum, carry) {
+    var d = Wire();
+    var e = Wire();
+
+    orGate(a, b, d);
+    andGate(a, b, carry);
+    inverter(carry, e);
+    andGate(d, e, sum);
+}
+
+func fullAdder(a, b, cIn, sum, cOut) {
+    var s = Wire();
+    var c1 = Wire();
+    var c2 = Wire();
+
+    halfAdder(b, cIn, s, c1);
+    halfAdder(a, s, sum, c2);
+    orGate(c1, c2, cOut);
 }
 
 var agenda = PriorityQueue();
@@ -203,22 +258,41 @@ func propagate() {
 
 func probe(name, wire) {
     wire.addAction(() => {
-       console.println(name + " at " + agenda.currentPriority() + " New Value: " + wire.getSignal());
+       console.println(name + " at " + agenda.currentPriority() + " is " + wire.getSignal());
   });
 }
 
 
 // Create circuit here:
 
-var input = Wire();
-var output = Wire();
-var output2 = Wire();
+var a = Wire();
+a.setSignal(1);
+var b = Wire();
+b.setSignal(1);
+var cIn = Wire();
+cIn.setSignal(0);
+var sum = Wire();
+var cOut = Wire();
 
-probe("input", input);
-probe("output", output);
-probe("output2", output2);
+probe("a", a);
+probe("b", b);
+probe("cIn", cIn);
+probe("sum", sum);
+probe("cOut", cOut);
 
-Inverter(input, output);
-Inverter(output, output2);
+fullAdder(a, b, cIn, sum, cOut);
 
 propagate();
+
+console.println();
+console.println("Input: ");
+console.println("A is " + a.getSignal());
+console.println("B is " + b.getSignal());
+console.println("Cin is " + cIn.getSignal());
+
+console.println();
+
+console.println("Output: ");
+console.println("Sum is " + sum.getSignal());
+console.println("Cout is " + cOut.getSignal());
+
