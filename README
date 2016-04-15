@@ -18,6 +18,10 @@ cat-functions
 run-functions
 cat-dictionary
 run-dictionary
+cat-adder
+run-adder
+cat-grad
+run-grad
 
 run-interpreter
 

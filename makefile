@@ -65,6 +65,12 @@ cat-adder:
 run-adder:
 	java -jar runner.jar code/src/org/bromano/benscript/tests/programs/adder.bs
 
+cat-grad:
+	cat code/src/org/bromano/benscript/tests/programs/lazy.bs
+
+run-grad:
+	java -jar runner.jar code/src/org/bromano/benscript/tests/programs/lazy.bs
+
 run-interpreter:
 	java -jar interpreter.jar
 
