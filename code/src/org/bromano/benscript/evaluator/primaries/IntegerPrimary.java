@@ -82,6 +82,11 @@ public class IntegerPrimary extends BasePrimary {
     }
 
     @Override
+    public Primary notEquals(Primary rhs) throws EvaluatorException {
+        return new BooleanPrimary(!this.value.equals(rhs.castToInteger().getValue()));
+    }
+
+    @Override
     public Primary minus() throws EvaluatorException {
         return new IntegerPrimary(-this.value);
     }
@@ -89,5 +94,10 @@ public class IntegerPrimary extends BasePrimary {
     @Override
     public Primary optional() throws EvaluatorException {
         return new OptionalPrimary(this);
+    }
+
+    @Override
+    public Primary addAssign(Primary rhs) throws EvaluatorException {
+        return super.addAssign(rhs);
     }
 }

@@ -8,12 +8,21 @@ import java.util.List;
 
 public class LambdaPrimary extends BasePrimary {
 
+    public boolean isLazy;
     private BenScriptLambda bsLambda;
 
     public LambdaPrimary(BenScriptLambda bsLambda) {
 
         this.type = PrimaryType.Lambda;
         this.bsLambda = bsLambda;
+        this.isLazy = false;
+    }
+
+    public LambdaPrimary(BenScriptLambda bsLambda, boolean isLazy) {
+
+        this.type = PrimaryType.Lambda;
+        this.bsLambda = bsLambda;
+        this.isLazy = isLazy;
     }
 
     @Override
@@ -39,6 +48,10 @@ public class LambdaPrimary extends BasePrimary {
             if (iterator.hasNext()) {
                 paramsList.append(",");
             }
+        }
+
+        if (isLazy) {
+            return new StringPrimary("LFunc<" + paramsList.toString() + ">");
         }
 
         return new StringPrimary("Func<" + paramsList.toString() + ">");

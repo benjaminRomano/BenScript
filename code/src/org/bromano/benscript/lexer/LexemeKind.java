@@ -10,6 +10,7 @@ public enum LexemeKind {
     IfKeyword,
     VarKeyword,
     FuncKeyword,
+    LFuncKeyword,
     BreakKeyword,
     ReturnKeyword,
     ContinueKeyword,

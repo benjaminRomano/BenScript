@@ -25,7 +25,7 @@ public abstract class BasePrimary implements Primary {
     }
 
     @Override
-    public Primary getPrimary() {
+    public Primary getPrimary() throws EvaluatorException {
         return this;
     }
 

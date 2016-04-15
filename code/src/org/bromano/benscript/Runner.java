@@ -14,13 +14,20 @@ public class Runner {
 
     public static void main(String[] args) throws Exception {
 
+        boolean loadWithLibraries = false;
+
         // TODO: Verify works
         if (args.length >= 1) {
-            run(loadFile(args[0]));
+
+            if (args.length == 2) {
+                loadWithLibraries = args[1].equals("--libs");
+            }
+
+            run(loadFile(args[0]), loadWithLibraries);
             return;
-        } else {
-            run(readFromSystemIn());
         }
+
+        run(readFromSystemIn(), false);
     }
 
     public static String loadFile(String filePath) throws Exception {
@@ -39,8 +46,12 @@ public class Runner {
         return inputStringBuilder.toString();
     }
 
-    public static void run(String code) throws Exception {
-        code = BenScriptLibraryLoader.loadLibraries() + code;
+    public static void run(String code, boolean loadWithLibraries) throws Exception {
+
+        if (loadWithLibraries) {
+            code = BenScriptLibraryLoader.loadLibraries() + code;
+        }
+
         List<Lexeme> lexemes = new BenScriptLexer(code).getLexStream();
         Program program = new BenScriptParser(lexemes).parse();
         program.evaluate(Environment.createGlobalEnvironment()).castToString().getValue();

@@ -11,6 +11,6 @@ public enum PrimaryType {
     Break,
     Return,
     Continue,
-    Identifier,
+    Delayed,
     ObjectIdentifier
 }

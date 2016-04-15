@@ -14,7 +14,7 @@ public class BenScriptBasicLambda implements BenScriptLambda {
 
     public Environment context;
     public Statement statement;
-    public List<String> paramNames;
+    private List<String> paramNames;
 
     public BenScriptBasicLambda(Environment context, Statement statement, List<String> paramNames) {
 

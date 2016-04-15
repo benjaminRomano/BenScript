@@ -358,7 +358,12 @@ public class BenScriptParser implements Parser {
 
         FunctionDeclarationStatement functionDeclarationStatement = new FunctionDeclarationStatement();
 
-        this.match(LexemeKind.FuncKeyword);
+        if (this.isAMatch(LexemeKind.LFuncKeyword)) {
+            functionDeclarationStatement.isLazy = true;
+            this.match(LexemeKind.LFuncKeyword);
+        } else {
+            this.match(LexemeKind.FuncKeyword);
+        }
 
         functionDeclarationStatement.name = this.match(LexemeKind.Identifier);
 
@@ -442,7 +447,8 @@ public class BenScriptParser implements Parser {
     }
 
     private boolean functionDeclarationStatementPending() {
-        return this.isAMatch(LexemeKind.FuncKeyword);
+        return this.isAMatch(LexemeKind.FuncKeyword)
+                || this.isAMatch(LexemeKind.LFuncKeyword);
     }
 
     private boolean expressionPending() {

@@ -70,10 +70,15 @@ func Queue() {
         return !head;
     }
 
+    func peek() {
+        return head.val;
+    }
+
     return {
         isEmpty: isEmpty,
         enqueue: enqueue,
-        dequeue: dequeue
+        dequeue: dequeue,
+        peek: peek
     };
 }
 
@@ -146,11 +151,16 @@ func PriorityQueue() {
         return head.priority;
     }
 
+    func peek() {
+        return head.queue.peek();
+    }
+
     return {
         currentPriority: currentPriority,
         isEmpty: isEmpty,
         enqueue: enqueue,
-        dequeue: dequeue
+        dequeue: dequeue,
+        peek: peek
     };
 }
 
@@ -251,8 +261,11 @@ func propagate() {
         return;
 
     }
-    var item = agenda.dequeue();
+
+    // Peeking before dequeuing so we don't lose track of current time
+    var item = agenda.peek();
     item();
+    agenda.dequeue();
     propagate();
 }
 

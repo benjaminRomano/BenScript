@@ -1,0 +1,26 @@
+lfunc neverLoad(neverLoaded, neverLoaded2, b) {
+    return b;
+}
+
+// Demonstrating improperly formatted expressions not getting evaluated.
+
+console.println(neverLoad(console.println("hello world"), 5.hello, "IT WORKS!"));
+
+
+
+// Demonstrating the value of a is not evaluated until the function call
+
+lfunc createLazyPrint(val) {
+    return () => {
+        console.println(val);
+    };
+}
+
+var a = null;
+
+var lazyPrint = createLazyPrint(a);
+
+a = 5;
+
+lazyPrint();
+

@@ -11,7 +11,7 @@ public interface Primary {
     StringPrimary castToString() throws EvaluatorException;
     BooleanPrimary castToBoolean() throws EvaluatorException;
     IntegerPrimary castToInteger() throws EvaluatorException;
-    Primary getPrimary();
+    Primary getPrimary() throws EvaluatorException;
 
     Primary add(Primary rhs) throws EvaluatorException;
     Primary subtract(Primary rhs) throws EvaluatorException;

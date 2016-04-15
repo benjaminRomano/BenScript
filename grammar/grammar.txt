@@ -32,9 +32,10 @@ while-statement: WHILE ( expression ) statement
 
 for-statement: FOR ( variable-declaration-statement expression* ; expression* ) statement
              
-keywords: VAR | FUNC | BREAK | RETURN | CONTINUE | IF | TRUE | FALSE | NULL | ELSE | FOR | WHILE
+keywords: VAR | FUNC | BREAK | RETURN | CONTINUE | IF | TRUE | FALSE | NULL | ELSE | FOR | WHILE | LFUNC
           
 function-declaration-statement: FUNC IDENTIFIER ( param-list* ) statement
+                              | LFUNC IDENTIFIER ( param-list* ) statement
 
 param-list: IDENTIFIER , param-list
           | IDENTIFIER

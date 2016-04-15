@@ -14,6 +14,7 @@ public class FunctionDeclarationStatement implements Statement {
     public Lexeme name;
     public List<Lexeme> parameters;
     public Statement statement;
+    public boolean isLazy;
 
     @Override
     public Primary evaluate(Environment context) throws EvaluatorException {
@@ -23,7 +24,7 @@ public class FunctionDeclarationStatement implements Statement {
         List<String> paramNames = parameters.stream().map((l) -> l.value).collect(Collectors.toList());
 
         BenScriptBasicLambda bsLambda = new BenScriptBasicLambda(newContext, this.statement, paramNames);
-        Primary bsLambdaPrimary = new LambdaPrimary(bsLambda);
+        Primary bsLambdaPrimary = new LambdaPrimary(bsLambda, this.isLazy);
 
         context.addPrimary(name.value, bsLambdaPrimary);
 

@@ -1,3 +1,4 @@
+// Recursive fib
 func fib(n) {
     if ( n <= 1)
         return n;
@@ -5,7 +6,7 @@ func fib(n) {
 }
 
 
-// Lambda implementation
+// Lambdas
 var a = (n) => {
     if ( n <= 1)
         return n;
@@ -15,7 +16,45 @@ var a = (n) => {
 //First class functions
 var fib = a;
 
-console.println(fib(1));
-console.println(fib(2));
-console.println(fib(3));
-console.println(fib(4));
+
+for (var i = 1; i < 5; i += 1) {
+    console.println(fib(i));
+}
+
+
+
+
+// UNCOMMENT THIS TO SHOWCASE MEMOIZED FIBONACCI
+
+// //Memoized recursive fib
+// func makeMemoFib() {
+//     var cached = {};
+//
+//     func memoFib(n) {
+//         if (null != cached[n]) {
+//             return cached[n];
+//         }
+//
+//         if ( n <= 1) {
+//             cached[n] = n;
+//             return n;
+//         }
+//
+//         cached[n] = memoFib(n - 1) + memoFib(n - 2);
+//         return cached[n];
+//     }
+//
+//     return memoFib;
+// }
+//
+// for (var i = 1; i < 30; i += 1) {
+//     console.println(fib(i));
+// }
+//
+// console.println();
+//
+// var memoFib = makeMemoFib();
+//
+// for (var i = 1; i <= 45; i += 1) {
+//     console.println(memoFib(i));
+// }

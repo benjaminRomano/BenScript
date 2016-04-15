@@ -49,4 +49,9 @@ public class BooleanPrimary extends BasePrimary {
     public Primary equals(Primary rhs) throws EvaluatorException {
         return new BooleanPrimary(this.value == rhs.castToBoolean().getValue());
     }
+
+    @Override
+    public Primary notEquals(Primary rhs) throws EvaluatorException {
+        return new BooleanPrimary(this.value != rhs.castToBoolean().getValue());
+    }
 }
