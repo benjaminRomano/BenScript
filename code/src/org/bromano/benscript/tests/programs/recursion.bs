@@ -5,56 +5,6 @@ func fib(n) {
     return fib(n - 1) + fib(n - 2);
 }
 
-
-// Lambdas
-var a = (n) => {
-    if ( n <= 1)
-        return n;
-    return fib(n - 1) + fib(n - 2);
-}
-
-//First class functions
-var fib = a;
-
-
 for (var i = 1; i < 5; i += 1) {
     console.println(fib(i));
 }
-
-
-
-
-// UNCOMMENT THIS TO SHOWCASE MEMOIZED FIBONACCI
-
-// //Memoized recursive fib
-// func makeMemoFib() {
-//     var cached = {};
-//
-//     func memoFib(n) {
-//         if (null != cached[n]) {
-//             return cached[n];
-//         }
-//
-//         if ( n <= 1) {
-//             cached[n] = n;
-//             return n;
-//         }
-//
-//         cached[n] = memoFib(n - 1) + memoFib(n - 2);
-//         return cached[n];
-//     }
-//
-//     return memoFib;
-// }
-//
-// for (var i = 1; i < 30; i += 1) {
-//     console.println(fib(i));
-// }
-//
-// console.println();
-//
-// var memoFib = makeMemoFib();
-//
-// for (var i = 1; i <= 45; i += 1) {
-//     console.println(memoFib(i));
-// }

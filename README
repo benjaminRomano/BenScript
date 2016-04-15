@@ -1,0 +1,26 @@
+Make file available commands:
+
+cat-error1
+run-error1
+cat-error2
+run-error2
+cat-error3
+run-error3
+cat-arrays
+run-arrays
+cat-conditionals
+run-conditionals
+cat-recursion
+run-recursion
+cat-iteration
+run-iteration
+cat-functions
+run-functions
+cat-dictionary
+run-dictionary
+
+run-interpreter
+
+
+Command to re-generate sources file
+find code/src/ -path "*tests*" -prune -o -name "*.java" -print > sources

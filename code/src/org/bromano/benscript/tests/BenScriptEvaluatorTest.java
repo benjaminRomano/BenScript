@@ -55,7 +55,7 @@ public class BenScriptEvaluatorTest {
     public void testArrays() throws IOException, URISyntaxException, EvaluatorException, ParserException, LexerException {
         String code = this.getFileContent("arrays.bs");
 
-        assertEvaluatorResults(new EvaluatorResult("[5, 6, 7]\n5\n", new NullPrimary()), this.evaluateCode(code));
+        assertEvaluatorResults(new EvaluatorResult("[5, 6, 7]\n5\n6\n7\n", new NullPrimary()), this.evaluateCode(code));
     }
 
     @Test

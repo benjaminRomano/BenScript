@@ -1,0 +1,17 @@
+func test() {
+    console.println("test was called");
+}
+
+
+func funcPassing(f) {
+    f();
+}
+
+func funcReturning() {
+    return () => {
+        console.println("func that was returned was called");
+    };
+}
+
+funcPassing(test);
+funcReturning()();
