@@ -1,3 +1,4 @@
+
 //Variable names
 Can start with [_a-zA-Z]
 Can be followed by [_0-9a-zA-Z]
@@ -20,7 +21,6 @@ var a = "hello world";
 a[0] //h
 
 //Objects
-//TODO: Fix problem with not being able to iterate through keys
 var a = {
     a: 5,
     b: "hello world"
@@ -51,9 +51,8 @@ a.b //"hello world"
 //Operators
 ==, !=, <, <=, >, >=, ?
 &&, ||
-+, -, *, /, %, ^ (maybe exponential)
++, -, *, /, %, ^
 +=, -=, *=, /=, %=, ^=, 
-++, -- (prefix only)
     
 
 //Statements
@@ -91,12 +90,14 @@ for (var i = 0; i < arr.length; i++) {
 }
 
 //Functions
-function f(f, ...g) {
+func f(f, g) {
     console.print(f, g);
 }
 
-f(a); //5
-f(a,b); //5 ["hello"]
+// Functions with delayed evaluation of args
+lfunc (f, g) {
+    console.print(f,g);
+}
 
 //Anonymous functions
 
@@ -104,20 +105,28 @@ f(a,b); //5 ["hello"]
 ((d, e) => { console.print(d, e); })(a,b); //5 hello
 
 
-var a = (d,...e) => {
-    console.print(d, e); //Variadics work the same as in functions
+var a = (d,e) => {
+    console.print(d, e); 
 }
 
 //Comments
 A comment can be a block comment (/* */)  or line comment (//) 
 
+
+// GLOBALS
+
+// Console object
+console.println("", 2, 3);
+console.print("", 2, 3);
+
+a = [1,2,3]
+length(a); // 3
+
+
 //Dictionary - Library implementation
+
 var dic = Dictionary.create();
 dic.add("a", "b");
 dic.put("5", "a");
 dic.get("6"); //Error: Invalid Key not found
 dic.getIfExists("5"); //null
-
-
-//WISHLIST:
-// : operator for iterating over things with iterables
